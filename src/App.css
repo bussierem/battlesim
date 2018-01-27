@@ -1,0 +1,11 @@
+html,body,#root,.container,.app{
+	height:100%
+}
+.row{
+	height:50%;
+}
+.col{
+  overflow-y:scroll;
+  height:100%;
+}
+	
