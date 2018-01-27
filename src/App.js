@@ -6,12 +6,14 @@ import {Grid,Row,Col,PageHeader} from 'react-bootstrap';
 import {Accordion} from 'react-accessible-accordion';
 
 import BeingList from './BeingList'
+const schemaLoader = require('./SchemaLoader');
 
 const faker = require('faker');
 
 class App extends Component {
   constructor(props){
     super(props);
+    schemaLoader('Combatant');
     const playerSchema = {
       name:()=>faker.name.findName(),
       health:()=>Math.random()*100,
