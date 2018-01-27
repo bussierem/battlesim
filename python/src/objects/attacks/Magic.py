@@ -1,4 +1,4 @@
-from attacks.Attack import *
+from objects.attacks.Attack import *
 
 class Magic(Attack):
   def __init__(self, spell_lvl, hit_bonus, damage_str):
