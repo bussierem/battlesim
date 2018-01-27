@@ -1,5 +1,5 @@
-from Combatant import *
-from attacks.Attack import *
+from objects.Combatant import *
+from objects.attacks.Attack import *
 
 class Player(Combatant):
   def __init__(self, **kwargs):
@@ -31,5 +31,6 @@ class Player(Combatant):
     out += "Consumables: {0}\nRegenerators: {1}\n".format(
       self.consumables, self.regenerators
     )
+    out += "Attacks:\n"
     out += "".join(["  {}\n".format(a) for a in self.attacks])
     return out
