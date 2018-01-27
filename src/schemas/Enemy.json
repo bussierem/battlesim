@@ -1,0 +1,29 @@
+{
+  "title": "Enemy",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "default": "Enemy"
+    },
+    "cr": {
+      "type": "integer",
+      "default": 0
+    },
+    "health": {
+      "type": "integer",
+      "default": 10
+    },
+    "initiative": {
+      "type": "integer",
+      "default": 0
+    },
+    "attacks": {
+      "type": "array",
+      "items": {
+        "type": "Attack",
+      },
+      "default": []
+    }
+  }
+}
