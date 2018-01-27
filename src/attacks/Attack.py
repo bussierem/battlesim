@@ -7,11 +7,18 @@ class Attack_Type(Enum):
   Magic = "Magic"
 
 class Attack:
-  def __init__(self, hit_bonus, self_type, damage_str):
-    self.hit = hit_bonus
+  def __init__(self, self_type, hit_bonus, damage_str):
     self.type = self_type
+    self.hit = hit_bonus
     # damage_str can be either "<min>-<max>" or "XdY+B" format
     self.damage = damage_str
+
+  def to_json(self):
+    return {
+      'type': self.type.name,
+      'hit': self.hit,
+      'damage': self.damage
+    }
 
   def __str__(self):
     dmg = self.damage.split('-') if '-' in self.damage else self.damage

@@ -7,6 +7,15 @@ class Combatant(object):
         self.init = initiative_mod
         self.attacks = attack_list
 
+    def to_json(self):
+      return {
+        'name': self.name,
+        'health': self.hp,
+        'initiative': self.init,
+        'attacks': [atk.to_json() for atk in self.attacks if atk.type != Attack_Type.Magic],
+        'spells': [atk.to_json() for atk in self.attacks if atk.type == Attack_Type.Magic],
+      }
+
     def __str__(self):
       out = "Name: {0}\nHealth: {1}\nInitiative: {2}\n".format(
         self.name, self.hp,
