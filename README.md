@@ -56,3 +56,6 @@
   - **FUTURE:**
     - Something for adding/storing enemies from bestiaries
     - Balancing around taking full day instead of using resources
+## Client Installation
+ 1. `npm install`
+ 2. `npm start`
