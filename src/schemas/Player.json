@@ -1,0 +1,44 @@
+{
+  "title": "Player",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "default": "Player"
+    },
+    "level": {
+      "type": "integer",
+      "default": 1
+    },
+    "health": {
+      "type": "integer",
+      "default": 10
+    },
+    "initiative": {
+      "type": "integer",
+      "default": 0
+    },
+    "attacks": {
+      "type": "array",
+      "items": {
+        "type": "Attack",
+      },
+      "default": []
+    },
+    "spells": {
+      "type": "array",
+      "items": {
+        "type": "Magic`",
+      },
+      "default": []
+    },
+    "consumables": {
+      "type": "integer",
+      "default": 0
+    },
+    "regenerators": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Attack",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "hit": {
+      "type": "integer"
+    },
+    "damage": {
+      "type": "string"
+    }
+  }
+}

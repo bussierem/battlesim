@@ -29,7 +29,7 @@
 
 ## SPELLS
   - Spell Level
-  - Saving Throw
+  - **FUTURE:** Saving Throws (would require saving throws on [Combatants](#COMBATANTS))
 
 ## RESOURCES
   - Represents:
