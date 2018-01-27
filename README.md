@@ -2,6 +2,13 @@
 
 # Installation/Run Instructions
 
+## Endpoints
+  - GET ALL /battle
+  - GET /battle/<id>
+  - GET /battle/<id>/step/<id>
+  - POST /enemy
+  - POST /player
+
 ## Client Installation
 1. `npm install`
 2. `npm start`
