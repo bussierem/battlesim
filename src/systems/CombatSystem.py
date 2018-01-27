@@ -7,4 +7,9 @@ class CombatSystem:
 
   def roll_initiative(self):
     for c in combatants:
-    rolls = {c: c.roll_init()['total'] for c in self.combatants}
+      roll = c.roll_init()['total']
+      if self.turn_order == []:
+        self.turn_order.append(roll)
+        continue
+
+      
