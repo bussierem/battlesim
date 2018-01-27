@@ -11,12 +11,18 @@ const Api = require('./Api');
 class App extends Component {
   constructor(props){
     super(props);
-    const battle = Api.getBattle();
-    console.log(battle);
     this.state = {
-      players:battle.steps[0].players,
-      enemies:battle.steps[0].enemies
+      players:[],
+      enemies:[],
+      step:0
     };
+    const battle = Api.getBattle().then((battle)=>{
+      console.log(battle);
+      this.setState({
+        players:battle.steps[0].players,
+        enemies:battle.steps[0].enemies
+      });
+    });
   }
   render() {
     return (
