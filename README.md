@@ -7,7 +7,7 @@
   - Health
   - [Attack](#ATTACKS) List
   - Initiative bonus
-  - Type:  [Player](#PLAYERS) or [Enemy](#ENEMIES)
+  - Sub-Types:  [Player](#PLAYERS) or [Enemy](#ENEMIES)
 
 ## PLAYERS
   - [Resources](#RESOURCES)
@@ -16,11 +16,20 @@
 ## ENEMIES
   - Challenge Rating (CR)
 
+## TRAPS
+  - Attack(s)
+  - Damage Range
+
 ## ATTACKS
   - Hit bonus
   - Attack Type (Melee, Ranged, Magic)
   - Damage Range (Min-Max)
     - **ALTERNATIVE:**  Damage _roll text_ **XdY(+/-)B**
+  - Sub-Types:  [Spell](#SPELLS)
+
+## SPELLS
+  - Spell Level
+  - Saving Throw
 
 ## RESOURCES
   - Represents:
@@ -28,6 +37,7 @@
       - Potions, Scrolls, etc
     - "Regenerators":
       - Magic Spell Slots
+        - IDEA:  Each spell level uses (level) resources from Regenerators pool
       - Daily Abilities
       - Daily Item uses
   - Option 1:  Single "Resource" value representing all things for players
