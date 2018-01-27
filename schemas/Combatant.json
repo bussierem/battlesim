@@ -8,11 +8,12 @@
     },
     "health": {
       "type": "integer",
-      "default": 0
     },
     "initiative": {
       "type": "integer",
-      "default": 0
+    },
+    "defense": {
+      "type": "integer",
     },
     "attacks": {
       "type": "array",

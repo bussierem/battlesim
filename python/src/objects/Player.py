@@ -8,6 +8,7 @@ class Player(Combatant):
       kwargs.get('name', "Player"),
       kwargs.get('health', 10),
       kwargs.get('init', 0),
+      kwargs.get('defense', 10),
       kwargs.get('attacks', [])
     )
     self.level = kwargs.get('level', 1)
