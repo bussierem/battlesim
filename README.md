@@ -15,6 +15,7 @@
   - Health
   - [Attack](#attacks) List
   - Initiative bonus
+  - Defense
   - Sub-Types:  [Player](#players) or [Enemy](#enemies)
 
 ## PLAYERS
