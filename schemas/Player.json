@@ -1,9 +1,9 @@
 {
   "title": "Player",
   "type": "object",
+  "base_class": "Combatant",
   "properties": {
     "name": {
-      "type": "string",
       "default": "Player"
     },
     "level": {
@@ -11,24 +11,21 @@
       "default": 1
     },
     "health": {
-      "type": "integer",
       "default": 10
     },
     "initiative": {
-      "type": "integer",
       "default": 0
     },
+    "defense": {
+      "defaukt": 10
+    },
     "attacks": {
-      "type": "array",
-      "items": {
-        "type": "Attack",
-      },
       "default": []
     },
     "spells": {
       "type": "array",
       "items": {
-        "type": "Magic`",
+        "type": "Magic",
       },
       "default": []
     },

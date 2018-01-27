@@ -1,6 +1,7 @@
 {
   "title": "Magic",
   "type": "object",
+  "base_class": "Attack",
   "properties": {
     "level": {
       "type": "integer"
@@ -8,12 +9,6 @@
     "type": {
       "type": "string",
       "default": "Magic"
-    },
-    "hit": {
-      "type": "integer"
-    },
-    "damage": {
-      "type": "string"
     }
   }
 }

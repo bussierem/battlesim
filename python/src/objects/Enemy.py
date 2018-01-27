@@ -8,6 +8,7 @@ class Enemy(Combatant):
       kwargs.get('name', "Enemy"),
       kwargs.get('health', 10),
       kwargs.get('init', 0),
+      kwargs.get('defense', 10)
       kwargs.get('attacks', [])
     )
     self.cr = kwargs.get('cr', 0)
