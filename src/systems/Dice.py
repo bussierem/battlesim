@@ -14,4 +14,4 @@ def roll_dice(dice_str):
 
 def rand_from_range(dmg_str):
   vals = [int(x) for x in dmg_str.split('-')]
-  return random.randint(*vals)
+  return { "total": random.randint(*vals) }

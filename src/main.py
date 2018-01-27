@@ -17,30 +17,34 @@ if __name__ == "__main__":
   # print(rand_from_range("50-100"))
   melee = Attack(Attack_Type.Melee, 4, "1d8+2")
   ranged = Attack(Attack_Type.Ranged, 2, "1d6")
-  spell = Magic(1, 4, "5-20")
+  spell = Magic(1, 4, "5-10")
   p1 = Player(
     name="Max",
     level=4,
     health=20,
-    initiative=2,
+    init=2,
     defense=15,
     attacks=[melee, ranged],
     spells=[spell],
     consumables=4,
     regenerators=10
   )
-  print(p1)
+  # print(p1)
   melee2 = Attack(Attack_Type.Melee, 2, "1d6+2")
   ranged2 = Attack(Attack_Type.Ranged, 1, "1d4")
   enemy = Enemy(
     name="Goblin",
     cr=2,
     health=15,
-    initiative=1,
+    init=1,
     defense=12,
     attacks=[melee2, ranged2]
   )
-  print(enemy)
+  # print(enemy)
+  system = CombatSystem([p1, enemy])
+  system.roll_initiative()
+  system.print_initiative()
+  system.play_full_combat()
 
 """
 roll initiative
