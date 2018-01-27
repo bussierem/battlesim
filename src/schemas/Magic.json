@@ -1,0 +1,19 @@
+{
+  "title": "Magic",
+  "type": "object",
+  "properties": {
+    "level": {
+      "type": "integer"
+    },
+    "type": {
+      "type": "string",
+      "default": "Magic"
+    },
+    "hit": {
+      "type": "integer"
+    },
+    "damage": {
+      "type": "string"
+    }
+  }
+}

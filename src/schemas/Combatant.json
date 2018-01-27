@@ -1,0 +1,32 @@
+{
+  "title": "Combatant",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "default": ""
+    },
+    "health": {
+      "type": "integer",
+      "default": 0
+    },
+    "initiative": {
+      "type": "integer",
+      "default": 0
+    },
+    "attacks": {
+      "type": "array",
+      "items": {
+        "type": "Attack",
+      },
+      "default": []
+    },
+    "spells": {
+      "type": "array",
+      "items": {
+        "type": "Magic`",
+      },
+      "default": []
+    }
+  }
+}
