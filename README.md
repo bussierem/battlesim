@@ -1,16 +1,24 @@
 # Battle Simulator
 
+# Installation/Run Instructions
+
+## Client Installation
+1. `npm install`
+2. `npm start`
+
+---
+
 ## Game
   - Dice System (d20, d100, **future:  Dice Pool**)
 
 ## COMBATANTS
   - Health
-  - [Attack](#ATTACKS) List
+  - [Attack](#attacks) List
   - Initiative bonus
-  - Sub-Types:  [Player](#PLAYERS) or [Enemy](#ENEMIES)
+  - Sub-Types:  [Player](#players) or [Enemy](#enemies)
 
 ## PLAYERS
-  - [Resources](#RESOURCES)
+  - [Resources](#resources)
   - Level
 
 ## ENEMIES
@@ -25,11 +33,11 @@
   - Attack Type (Melee, Ranged, Magic)
   - Damage Range (Min-Max)
     - **ALTERNATIVE:**  Damage _roll text_ **XdY(+/-)B**
-  - Sub-Types:  [Spell](#SPELLS)
+  - Sub-Types:  [Spell](#spells)
 
 ## SPELLS
   - Spell Level
-  - **FUTURE:** Saving Throws (would require saving throws on [Combatants](#COMBATANTS))
+  - **FUTURE:** Saving Throws (would require saving throws on [Combatants](#combatants))
 
 ## RESOURCES
   - Represents:
@@ -56,6 +64,3 @@
   - **FUTURE:**
     - Something for adding/storing enemies from bestiaries
     - Balancing around taking full day instead of using resources
-## Client Installation
- 1. `npm install`
- 2. `npm start`
