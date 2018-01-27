@@ -11,5 +11,5 @@ def load_battle_file(battle_file):
 
 @app.route("/battles")
 def get_battles():
-  battles = load_battle_file("../data/mockedBattle.json")
+  battles = load_battle_file("data/mockedBattle.json")
   return json.dumps(battles, indent=2)
