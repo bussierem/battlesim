@@ -1,7 +1,7 @@
-const serverUrl = 'www.xd.com'
+const serverUrl = 'https://battle-sim.herokuapp.com';
 
 module.exports = {
-  getBattle: async ()=>{
-    return fetch(`${serverUrl}/battles`)[0];
+  getBattle: ()=>{
+    return fetch(`${serverUrl}/battles`);
   }
 }
