@@ -3,7 +3,8 @@ Create a new Player
 tags:
   - Players
 definitions:
-  Attack:
+  schema:
+    id: Attack
     type: object
     properties:
       atk_type:
@@ -15,7 +16,8 @@ definitions:
       damage:
         type: string
         description: Damage roll (XdY+B) or range (<min>-<max>)
-  Spell:
+  schena:
+    id: Spell
     type: object
     properties:
       spell_lvl:
@@ -30,7 +32,8 @@ definitions:
 parameters:
   - name: body
     in: body
-    Player:
+    schema:
+      id: Player
       type: object
       properties:
         name:

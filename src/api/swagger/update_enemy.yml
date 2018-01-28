@@ -1,9 +1,10 @@
-Update an Enemy by IB
+Update an Enemy by ID
 ---
 tags:
   - Enemies
 definitions:
-  Attack:
+  schema:
+    id: Attack
     type: object
     properties:
       atk_type:
@@ -52,5 +53,6 @@ responses:
   204:
     description: Enemy updated
     schema:
+      id: guid
       type: string
       descriptions: The ID of the Enemy (will be the same)
