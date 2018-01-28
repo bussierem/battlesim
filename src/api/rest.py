@@ -75,13 +75,14 @@ def create_combatant(request, ctype, guid=None):
   return Response("ID: {}".format(new_combatant.id), status=201)
 
 # ------------------ /
-# ROUNTING FUNCTIONS
+# ROUTING FUNCTIONS
 # ------------------ /
 
 # Thanks - https://stackoverflow.com/questions/44209978/serving-a-create-react-app-with-flask
 @app.route('/', defaults={'path': ''})
 @app.route('/static/<path:path>')
 def serve(path):
+  cwd = os.getcwd()
   static_path = cwd+'/'+static_folder
   if(path == ""):
     return send_from_directory(static_path, 'index.html')

@@ -7,9 +7,16 @@ class CreateCombatant extends Component{
     super(props);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       show:false
     }
+  }
+
+  handleSubmit(combatant){
+    console.log(combatant.formData);
+    console.log(JSON.stringify(combatant.formData));
+    //this.props.createCombatant().then()
   }
   handleClose(){
     this.setState({show:false});
@@ -20,16 +27,12 @@ class CreateCombatant extends Component{
   render(){
     return this.state.show ? 
     <Modal.Dialog show={this.state.show}>
-      <Modal.Header>
+      <Modal.Header closeButton={true} onHide={this.handleClose}>
         <Modal.Title>Create {this.props.schema.title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <Form schema={this.props.schema}/>
+      <Modal.Body scroll>
+        <Form schema={this.props.schema} onSubmit={this.handleSubmit} liveValidate={true} validate={this.props.validateSchema}/>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick = {this.handleClose}> Close </Button>
-        <Button> Add </Button>
-      </Modal.Footer>
     </Modal.Dialog> :
     <Button onClick = {this.handleShow}> Create {this.props.schema.title} </Button>;
   }
