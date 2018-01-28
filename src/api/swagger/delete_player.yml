@@ -1,0 +1,13 @@
+Delete a Player by ID
+---
+tags:
+  - players
+parameters:
+  - in: path
+    name: guid
+    description: ID of the Player to delete
+    required: true
+    type: string
+responses:
+  200:
+    description: Player deleted
