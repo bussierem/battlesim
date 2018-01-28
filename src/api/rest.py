@@ -1,7 +1,7 @@
-from src.objects.attacks.Attack import *
-from src.objects.attacks.Magic import *
-from src.systems.CombatSystem import *
-from src.systems.Utilities import *
+from objects.attacks.Attack import *
+from objects.attacks.Magic import *
+from systems.CombatSystem import *
+from systems.Utilities import *
 
 from flask import Flask, request, Response
 from flask_cors import CORS
