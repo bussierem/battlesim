@@ -3,15 +3,29 @@ from objects.attacks.Magic import *
 from systems.CombatSystem import *
 from systems.Utilities import *
 
-from flask import Flask, request, Response, MethodView
+from flask import Flask, request, Response, send_from_directory, MethodView
 from flask_cors import CORS
 from flask_swagger import swagger
 import json
 import os
 
-
-app = Flask(__name__)
+static_folder = 'js/build'
+app = Flask(__name__,static_folder=static_folder)
 CORS(app)
+
+# Thanks - https://stackoverflow.com/questions/44209978/serving-a-create-react-app-with-flask
+@app.route('/', defaults={'path': ''})
+@app.route('/static/<path:path>')
+def serve(path):
+  static_path = cwd+'/'+static_folder
+  if(path == ""):
+    return send_from_directory(static_path, 'index.html')
+  else:
+    if(os.path.exists(static_path + "/" + path)):
+      static_path,file = os.path.split(static_path + "/" + path)
+      return send_from_directory(static_path, file)
+    else:
+      return send_from_directory(static_path,  'index.html')
 
 def get_object_response(fpath, guid):
   try:
