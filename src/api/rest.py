@@ -28,8 +28,11 @@ def serve(path):
     return send_from_directory(static_path, 'index.html')
   else:
     if(os.path.exists(static_path + "/" + path)):
-      return send_from_directory(static_path, path)
+      static_path,file = os.path.split(static_path + "/" + path)
+      print(static_path + "/" + path)
+      return send_from_directory(static_path, file)
     else:
+      print("COULDNT FIND THAT PATH")
       return send_from_directory(static_path,  'index.html')
 
 def get_object_response(fpath, guid):
