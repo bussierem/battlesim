@@ -1,3 +1,5 @@
+from systems.Dice import *
+
 import random
 from enum import Enum
 
@@ -12,6 +14,15 @@ class Attack:
     self.hit = hit_bonus
     # damage_str can be either "<min>-<max>" or "XdY+B" format
     self.damage = damage_str
+
+  def roll(self):
+    is_crit = False
+    hit_result = roll_dice("1d20{}".format(
+      "+{}".format(self.hit) if self.hit >= 0 else self.hit
+    ))
+    damage_result = rand_from_range(self.damage) if "-" in self.damage else roll_dice(self.damage)
+    is_crit = (hit_result['rolls'][0] == 20)
+    return hit_result, is_crit, damage_result
 
   def to_json(self):
     return {
