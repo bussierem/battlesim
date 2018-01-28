@@ -23,13 +23,14 @@ def serve(path):
   print(allFiles);
   allFiles = os.listdir(static_folder)
   print(allFiles);
+  static_path = cwd+'/'+static_folder
   if(path == ""):
-    return send_from_directory(static_folder, 'index.html')
+    return send_from_directory(static_path, 'index.html')
   else:
-    if(os.path.exists(static_folder + path)):
-      return send_from_directory(static_folder, path)
+    if(os.path.exists(static_path + path)):
+      return send_from_directory(static_path, path)
     else:
-      return send_from_directory(static_folder, 'index.html')
+      return send_from_directory(static_path, 'index.html')
 
 def get_object_response(fpath, guid):
   try:
