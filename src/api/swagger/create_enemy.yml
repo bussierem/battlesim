@@ -3,7 +3,8 @@ Create a new Enemy
 tags:
   - Enemies
 definitions:
-  Attack:
+  schema:
+    id: Attack
     type: object
     properties:
       atk_type:
@@ -18,7 +19,8 @@ definitions:
 parameters:
   - name: body
     in: body
-    Enemy:
+    schema:
+      id: Enemy
       type: object
       properties:
         name:
