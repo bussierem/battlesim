@@ -1,1 +1,1 @@
-web: gunicorn src.api.rest:app --log-file=-
+web: gunicorn --python-path="$PWD/src" api.rest:app --log-file=-
