@@ -33,6 +33,7 @@ module.exports = (...schemaNames)=>{
       }
       expandPtr[prop] = expandedSchema;
     });
+    curSchema.required = Object.keys(curSchema.properties).filter(prop=>curSchema.properties[prop].type!=='array').map(prop=>prop);
     allSchemas[schemaName] = curSchema; 
     return loadSchema(schemaName);
   }

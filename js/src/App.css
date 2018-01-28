@@ -53,4 +53,12 @@ h3{
   margin-top:0px;
   margin-bottom:0px;
 }
-	
+
+.modal-content{
+  height:90vh;
+}
+
+.modal-body{
+  height:90%;
+  overflow-y:scroll;
+}	

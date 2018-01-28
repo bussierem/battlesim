@@ -14,6 +14,7 @@ class App extends Component {
   constructor(props){
     super(props);
     const allSchemas = SchemaLoader("Player","Enemy");
+    this.validateSchema = this.validateSchema.bind(this);
     this.state = {
       players:[],
       enemies:[],
@@ -30,6 +31,28 @@ class App extends Component {
       });
     });*/
   }
+  
+  validateSchema(fullBody,errors){
+    const rollPropNames = ['damage'];
+    const valid = rollProp=> (rollProp || "").match(/\d+(?:d|\-)\d+(?:[+\-]\d+)?/);
+    const checkKey = (obj,error,name) =>{
+      //console.log(`checking ${JSON.stringify(obj)} with ${name}`);
+      if(obj === Object(obj)){
+        if(Array.isArray(obj)){
+          obj.forEach((item,spot)=>checkKey(item,error[spot]));
+        }
+        else{
+          Object.keys(obj).forEach(prop=>checkKey(obj[prop],error[prop],prop));
+        }
+      }
+      else if(rollPropNames.includes(name) && !valid(obj)){
+        error.addError(`${name} must be in valid dice roll (xdy+z) format`);
+      }
+    }
+    checkKey(fullBody,errors);
+    return errors;
+  }
+  
   render() {
     return (
       <div className="app">
@@ -45,8 +68,8 @@ class App extends Component {
       </Panel.Title>
       <Panel.Collapse>
       <Panel.Body>
-        <CreateCombatant schema={this.state.allSchemas["Player"]}/>
-        <CreateCombatant schema={this.state.allSchemas["Enemy"]}/>
+        <CreateCombatant schema={this.state.allSchemas["Player"]} validateSchema={this.validateSchema}/>
+        <CreateCombatant schema={this.state.allSchemas["Enemy"]} validateSchema = {this.validateSchema}/>
       </Panel.Body>
       </Panel.Collapse>
       </Panel>
