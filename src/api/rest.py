@@ -27,10 +27,10 @@ def serve(path):
   if(path == ""):
     return send_from_directory(static_path, 'index.html')
   else:
-    if(os.path.exists(static_path + path)):
+    if(os.path.exists(static_path + "/" + path)):
       return send_from_directory(static_path, path)
     else:
-      return send_from_directory(static_path, 'index.html')
+      return send_from_directory(static_path,  'index.html')
 
 def get_object_response(fpath, guid):
   try:
