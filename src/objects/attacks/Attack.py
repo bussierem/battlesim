@@ -9,11 +9,11 @@ class Attack_Type(Enum):
   Magic = "Magic"
 
 class Attack:
-  def __init__(self, self_type, hit_bonus, damage_str):
-    self.type = self_type
+  def __init__(self, atk_type, hit_bonus, damage):
+    self.type = Attack_Type[atk_type]
     self.hit = hit_bonus
     # damage_str can be either "<min>-<max>" or "XdY+B" format
-    self.damage = damage_str
+    self.damage = damage
 
   def roll(self):
     is_crit = False
@@ -26,8 +26,8 @@ class Attack:
 
   def to_json(self):
     return {
-      'type': self.type.name,
-      'hit': self.hit,
+      'atk_type': self.type.name,
+      'hit_bonus': self.hit,
       'damage': self.damage
     }
 

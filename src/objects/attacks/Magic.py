@@ -1,14 +1,15 @@
 from objects.attacks.Attack import *
 
 class Magic(Attack):
-  def __init__(self, spell_lvl, hit_bonus, damage_str):
-    Attack.__init__(self, Attack_Type.Magic, hit_bonus, damage_str)
+  def __init__(self, spell_lvl, hit_bonus, damage):
+    Attack.__init__(self, 'Magic', hit_bonus, damage)
     self.level = spell_lvl
 
   def to_json(self):
     return {
-      'level': self.level,
-      'hit': self.hit,
+      'atk_type': self.type.name,
+      'spell_lvl': self.level,
+      'hit_bonus': self.hit,
       'damage': self.damage
     }
 
