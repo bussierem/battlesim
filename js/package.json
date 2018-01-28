@@ -2,9 +2,11 @@
   "name": "battlesim",
   "version": "0.1.0",
   "private": true,
+  "homepage":"https://battle-sim.herokuapp.com/"
   "dependencies": {
     "react": "^16.2.0",
     "react-accessible-accordion": "^1.0.2",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.0"
   },
