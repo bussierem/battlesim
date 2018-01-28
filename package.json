@@ -1,0 +1,6 @@
+{
+  "name":"battle-sim",
+  "scripts":{
+    "postinstall": "npm install --prefix js"
+  }
+}
