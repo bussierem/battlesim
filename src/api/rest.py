@@ -96,7 +96,7 @@ def serve(path):
 def spec():
     return jsonify(swagger(app))
 
-@app.route("/battles", endpoint=battles_no_guid, methods=['GET', 'POST'])
+@app.route("/battles", endpoint='battles_no_guid', methods=['GET', 'POST'])
 def battles_methods():
   if request.method == "GET":
     # TODO:  UPDATE THIS TO "../data/battles.json"
@@ -115,7 +115,7 @@ def battles_methods():
     resp = Response("UNSUPPORTED METHOD /battles [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/battles/<guid>", endpoint=battles_guid, methods=['GET', 'DELETE'])
+@app.route("/battles/<guid>", endpoint='battles_guid', methods=['GET', 'DELETE'])
 def battle_methods(guid):
   resp = None
   if request.method == "GET":
@@ -126,9 +126,9 @@ def battle_methods(guid):
     resp = Response("UNSUPPORTED METHOD /battles/<id> [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/players", endpoint=players_no_guid, methods=['GET', 'POST'])
-@swag_from("swagger/get_players.yml", endpoint=players_no_guid, methods=['GET'])
-@swag_from("swagger/create_player.yml", endpoint=players_no_guid, methods=['POST'])
+@app.route("/players", endpoint='players_no_guid', methods=['GET', 'POST'])
+@swag_from("swagger/get_players.yml", endpoint='players_no_guid', methods=['GET'])
+@swag_from("swagger/create_player.yml", endpoint='players_no_guid', methods=['POST'])
 def players_methods():
   if request.method == "GET":
     players = read_json_file("../data/combatants/players.json")
@@ -142,10 +142,10 @@ def players_methods():
     resp = Response("UNSUPPORTED METHOD /players [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/players/<guid>", endpoint=players_guid, methods=['GET', 'PUT', 'DELETE'])
-@swag_from("swagger/get_player.yml", endpoint=players_guid, methods=['GET'])
-@swag_from("swagger/update_player.yml", endpoint=players_guid, methods=['PUT'])
-@swag_from("swagger/delete_player.yml", endpoint=players_guid, methods=['DELETE'])
+@app.route("/players/<guid>", endpoint='players_guid', methods=['GET', 'PUT', 'DELETE'])
+@swag_from("swagger/get_player.yml", endpoint='players_guid', methods=['GET'])
+@swag_from("swagger/update_player.yml", endpoint='players_guid', methods=['PUT'])
+@swag_from("swagger/delete_player.yml", endpoint='players_guid', methods=['DELETE'])
 def player_methods(guid):
   if request.method == "GET":
     resp = get_object_response("../data/combatants/players", guid)
@@ -158,9 +158,9 @@ def player_methods(guid):
     resp = Response("UNSUPPORTED METHOD /players/<id> [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/enemies", endpoint=enemies_no_guid, methods=['GET', 'POST'])
-@swag_from("swagger/get_enemies.yml", endpoint=enemies_no_guid, methods=['GET'])
-@swag_from("swagger/create_enemy.yml", endpoint=enemies_no_guid, methods=['POST'])
+@app.route("/enemies", endpoint='enemies_no_guid', methods=['GET', 'POST'])
+@swag_from("swagger/get_enemies.yml", endpoint='enemies_no_guid', methods=['GET'])
+@swag_from("swagger/create_enemy.yml", endpoint='enemies_no_guid', methods=['POST'])
 def enemies_methods():
   if request.method == "GET":
     enemies = read_json_file("../data/combatants/enemies.json")
@@ -174,10 +174,10 @@ def enemies_methods():
     resp = Response("UNSUPPORTED METHOD /enemies [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/enemies/<guid>", endpoint=enemies_guid, methods=['GET', 'PUT', 'DELETE'])
-@swag_from("swagger/get_enemy.yml", endpoint=enemies_guid, methods=['GET'])
-@swag_from("swagger/update_enemy.yml", endpoint=enemies_guid, methods=['PUT'])
-@swag_from("swagger/delete_enemy.yml", endpoint=enemies_guid, methods=['DELETE'])
+@app.route("/enemies/<guid>", endpoint='enemies_guid', methods=['GET', 'PUT', 'DELETE'])
+@swag_from("swagger/get_enemy.yml", endpoint='enemies_guid', methods=['GET'])
+@swag_from("swagger/update_enemy.yml", endpoint='enemies_guid', methods=['PUT'])
+@swag_from("swagger/delete_enemy.yml", endpoint='enemies_guid', methods=['DELETE'])
 def enemy_methods(guid):
   if request.method == "GET":
     resp = get_object_response("../data/combatants/enemies", guid)
