@@ -3,7 +3,7 @@ from objects.attacks.Magic import *
 from systems.CombatSystem import *
 from systems.Utilities import *
 
-from flask import Flask, request, Response
+from flask import Flask, request, Response, send_from_directory
 from flask_cors import CORS
 import json
 import os
