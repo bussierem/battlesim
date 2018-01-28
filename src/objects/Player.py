@@ -1,11 +1,13 @@
 from objects.Combatant import *
 from objects.attacks.Attack import *
+from objects.attacks.Magic import *
 
 class Player(Combatant):
   def __init__(self, **kwargs):
     Combatant.__init__(
       self,
       kwargs.get('name', "Player"),
+      "Player",
       kwargs.get('health', 10),
       kwargs.get('init', 0),
       kwargs.get('defense', 10),
@@ -18,10 +20,20 @@ class Player(Combatant):
 
   def attack(self, target):
     if (self.spells != []):
-      atk_list = self.attacks if random.randint(0,1) > 0 else self.spells
+      if random.randint(0,1) > 0:
+        atk_list = self.attacks
+      else:
+        atk_list = self.spells
     else:
       atk_list = self.attacks
-    attack = atk_list[random.randint(0, len(atk_list)-1)]
+    attack = None
+    while attack == None:
+      attack = atk_list[random.randint(0, len(atk_list)-1)]
+      if isinstance(attack, Magic):
+        if self.regenerators < attack.level:
+          attack = None
+        else:
+          self.regenerators -= attack.level
     print("Attacking with:\n{}".format(attack))
     to_hit, is_crit, damage = attack.roll()
     if is_crit:
@@ -36,13 +48,20 @@ class Player(Combatant):
       target.damage(total_damage)
     else:
       print("Attack MISSED! ({} to hit vs. {})".format(to_hit['total'], target.defense))
-    return {'hit': is_hit, 'atk': to_hit, 'dmg': damage}
+    return {
+      'attack': attack.to_json(),
+      'hit': is_hit,
+      'crit': is_crit,
+      'attack_roll': to_hit,
+      'damage_roll': damage
+    }
 
   def to_json(self):
     base = Combatant.to_json(self)
     base['level'] = self.level
     base['consumables'] = self.consumables
     base['regenerators'] = self.regenerators
+    base['spells'] = [spell.to_json() for spell in self.spells]
     return base
 
   def __str__(self):
