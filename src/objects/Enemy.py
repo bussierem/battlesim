@@ -6,6 +6,7 @@ class Enemy(Combatant):
     Combatant.__init__(
       self,
       kwargs.get('name', "Enemy"),
+      'Enemy',
       kwargs.get('health', 10),
       kwargs.get('init', 0),
       kwargs.get('defense', 10),

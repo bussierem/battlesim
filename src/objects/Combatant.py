@@ -2,18 +2,24 @@ from objects.attacks.Attack import *
 from systems.Dice import roll_dice
 
 import random
+import uuid
+import copy
 
 class Combatant(object):
-    def __init__(self, name, health, initiative_mod, defense, attack_list):
-        self.name = name
-        self.hp = health
-        self.init = initiative_mod
-        self.defense = defense
-        self.attacks = attack_list
+    def __init__(self, name, ctype, health, initiative_mod, defense, attack_list):
+      self.id = str(uuid.uuid4())
+      self.name = name
+      self.type = ctype
+      self.hp = health
+      self.init = initiative_mod
+      self.defense = defense
+      self.attacks = attack_list
 
     def to_json(self):
       return {
+        'id': self.id,
         'name': self.name,
+        'type': self.type,
         'health': self.hp,
         'initiative': self.init,
         'defense': self.defense,
@@ -40,7 +46,13 @@ class Combatant(object):
         target.damage(total_damage)
       else:
         print("Attack MISSED! ({} to hit vs. {})".format(to_hit['total'], target.defense))
-      return {'hit': is_hit, 'crit': is_crit, 'atk': to_hit, 'dmg': damage}
+      return {
+        'attack': attack.to_json(),
+        'hit': is_hit,
+        'crit': is_crit,
+        'attack_roll': to_hit,
+        'damage_roll': damage
+      }
 
     def damage(self, dmg):
       self.hp -= dmg
