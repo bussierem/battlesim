@@ -19,6 +19,8 @@ def serve(path):
   print(path)
   cwd = os.getcwd()
   print(cwd)
+  allFiles = os.listdir(".");
+  print(allFiles);
   if(path == ""):
     return send_from_directory(static_folder, 'index.html')
   else:
