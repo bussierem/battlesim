@@ -1,10 +1,8 @@
 Create a new Enemy
 ---
-tags:
-  - enemies
 definitions:
-  - schema:
-    id: Attack
+  Attack:
+    type: object
     properties:
       atk_type:
         type: string
@@ -16,10 +14,10 @@ definitions:
         type: string
         description: Damage roll (XdY+B) or range (<min>-<max>)
 parameters:
-  - in: body
-    name: body
-    schema:
-      id: Enemy
+  - name: body
+    in: body
+    Enemy:
+      type: object
       properties:
         name:
           type: string

@@ -1,10 +1,8 @@
 Create a new Player
 ---
-tags:
-  - players
 definitions:
-  - schema:
-    id: Attack
+  Attack:
+    type: object
     properties:
       atk_type:
         type: string
@@ -15,8 +13,8 @@ definitions:
       damage:
         type: string
         description: Damage roll (XdY+B) or range (<min>-<max>)
-  - schema:
-    id: Spell
+  Spell:
+    type: object
     properties:
       spell_lvl:
         type: integer
@@ -28,10 +26,10 @@ definitions:
         type: string
         description: Damage roll (XdY+B) or range (<min>-<max>)
 parameters:
-  - in: body
-    name: body
-    schema:
-      id: Player
+  - name: body
+    in: body
+    Player:
+      type: object
       properties:
         name:
           type: string

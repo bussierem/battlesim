@@ -1,12 +1,10 @@
 Get list of of all Players
 ---
-tags:
-  - players
 responses:
   200:
     description: Players sent
-    schema:
-      id: Players
+    Players:
+      type: object
       properties:
         players:
           type: array

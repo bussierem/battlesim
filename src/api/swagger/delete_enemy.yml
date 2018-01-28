@@ -1,10 +1,8 @@
 Delete a Enemy
 ---
-tags:
-  - Enemies
 parameters:
-  - in: path
-    name: guid
+  - name: guid
+    in: path
     description: ID of the Enemy to delete
     required: true
     type: string

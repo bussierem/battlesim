@@ -3,8 +3,8 @@ Update a Player by ID
 tags:
   - players
 definitions:
-  - schema:
-    id: Attack
+  Attack:
+    type: object
     properties:
       atk_type:
         type: string
@@ -15,8 +15,8 @@ definitions:
       damage:
         type: string
         description: Damage roll (XdY+B) or range (<min>-<max>)
-  - schema:
-    id: Spell
+  Spell:
+    type: object
     properties:
       spell_lvl:
         type: integer
@@ -30,8 +30,8 @@ definitions:
 parameters:
   - in: body
     name: body
-    schema:
-      id: Player
+    Player:
+      type: object
       required:
         - name
         - health

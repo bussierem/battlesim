@@ -1,12 +1,10 @@
 Get list of of all Enemies
 ---
-tags:
-  - enemies
 responses:
   200:
     description: Enemies sent
-    schema:
-      id: Enemies
+    Enemies:
+      type: object
       properties:
         players:
           type: array

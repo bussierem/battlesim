@@ -5,27 +5,18 @@ from systems.Utilities import *
 
 from flask import Flask, request, Response, send_from_directory, MethodView
 from flask_cors import CORS
-from flask_swagger import swagger
+from flasgger import Swagger, swag_from
 import json
 import os
 
 static_folder = 'js/build'
 app = Flask(__name__,static_folder=static_folder)
 CORS(app)
+swagger = Swagger(app)
 
-# Thanks - https://stackoverflow.com/questions/44209978/serving-a-create-react-app-with-flask
-@app.route('/', defaults={'path': ''})
-@app.route('/static/<path:path>')
-def serve(path):
-  static_path = cwd+'/'+static_folder
-  if(path == ""):
-    return send_from_directory(static_path, 'index.html')
-  else:
-    if(os.path.exists(static_path + "/" + path)):
-      static_path,file = os.path.split(static_path + "/" + path)
-      return send_from_directory(static_path, file)
-    else:
-      return send_from_directory(static_path,  'index.html')
+# ------------------ /
+# UTILTITY FUNCTIONS /
+# ------------------ /
 
 def get_object_response(fpath, guid):
   try:
@@ -83,83 +74,29 @@ def create_combatant(request, ctype, guid=None):
   add_combatant_to_record(ctype, new_combatant.id)
   return Response("ID: {}".format(new_combatant.id), status=201)
 
+# ------------------ /
+# ROUNTING FUNCTIONS
+# ------------------ /
 
-class PlayerAPI(MethodView):
-  def get(self, guid):
-    if guid is None:
-      # return list
-      pass
+# Thanks - https://stackoverflow.com/questions/44209978/serving-a-create-react-app-with-flask
+@app.route('/', defaults={'path': ''})
+@app.route('/static/<path:path>')
+def serve(path):
+  static_path = cwd+'/'+static_folder
+  if(path == ""):
+    return send_from_directory(static_path, 'index.html')
+  else:
+    if(os.path.exists(static_path + "/" + path)):
+      static_path,file = os.path.split(static_path + "/" + path)
+      return send_from_directory(static_path, file)
     else:
-      # return player by id
-      pass
-
-  def post(self):
-    # create player
-    pass
-
-  def put(self, guid):
-    # update player by id
-    pass
-
-  def delete(self, guid):
-    # delete player by id
-    pass
-
-class EnemyAPI(MethodView):
-  def get(self, guid):
-    if guid is None:
-      # return list
-      pass
-    else:
-      # return enemy by id
-      pass
-
-  def post(self):
-    # create enemy
-    pass
-
-  def put(self, guid):
-    # update enemy by id
-    pass
-
-  def delete(self, guid):
-    # delete enemy by id
-    pass
-
-class BattleAPI(MethodView):
-  def get(self, guid):
-    if guid is None:
-      # return list of battle overviews
-      pass
-    else:
-      # return battle by id
-      pass
-
-  def post(self):
-    # create battle
-    pass
-
-  def delete(self, guid):
-    # delete battle by id
-    pass
-
-def register_api(view, endpoint, url, id_methods=['GET', 'PUT', 'DELETE'], pk='guid', pk_type='string'):
-    view_func = view.as_view(endpoint)
-    app.add_url_rule(url, defaults={pk: None},
-                     view_func=view_func, methods=['GET',])
-    app.add_url_rule(url, view_func=view_func, methods=['POST',])
-    app.add_url_rule('%s<%s:%s>' % (url, pk_type, pk), view_func=view_func,
-                     methods=id_methods)
-
-# register_api(PlayerAPI, 'player_api', '/players/')
-# register_api(EnemyAPI, 'enemy_api', '/enemies/')
-# register_api(BattleAPI, 'battle_api', '/battles/', id_methods=['GET', 'DELETE'])
+      return send_from_directory(static_path,  'index.html')
 
 @app.route("/spec")
 def spec():
     return jsonify(swagger(app))
 
-@app.route("/battles", methods=['GET', 'POST'])
+@app.route("/battles", endpoint=battles_no_guid, methods=['GET', 'POST'])
 def battles_methods():
   if request.method == "GET":
     # TODO:  UPDATE THIS TO "../data/battles.json"
@@ -178,7 +115,7 @@ def battles_methods():
     resp = Response("UNSUPPORTED METHOD /battles [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/battles/<guid>", methods=['GET', 'DELETE'])
+@app.route("/battles/<guid>", endpoint=battles_guid, methods=['GET', 'DELETE'])
 def battle_methods(guid):
   resp = None
   if request.method == "GET":
@@ -189,7 +126,9 @@ def battle_methods(guid):
     resp = Response("UNSUPPORTED METHOD /battles/<id> [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/players", methods=['GET', 'POST'])
+@app.route("/players", endpoint=players_no_guid, methods=['GET', 'POST'])
+@swag_from("swagger/get_players.yml", endpoint=players_no_guid, methods=['GET'])
+@swag_from("swagger/create_player.yml", endpoint=players_no_guid, methods=['POST'])
 def players_methods():
   if request.method == "GET":
     players = read_json_file("../data/combatants/players.json")
@@ -203,7 +142,10 @@ def players_methods():
     resp = Response("UNSUPPORTED METHOD /players [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/players/<guid>", methods=['GET', 'PUT', 'DELETE'])
+@app.route("/players/<guid>", endpoint=players_guid, methods=['GET', 'PUT', 'DELETE'])
+@swag_from("swagger/get_player.yml", endpoint=players_guid, methods=['GET'])
+@swag_from("swagger/update_player.yml", endpoint=players_guid, methods=['PUT'])
+@swag_from("swagger/delete_player.yml", endpoint=players_guid, methods=['DELETE'])
 def player_methods(guid):
   if request.method == "GET":
     resp = get_object_response("../data/combatants/players", guid)
@@ -216,7 +158,9 @@ def player_methods(guid):
     resp = Response("UNSUPPORTED METHOD /players/<id> [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/enemies", methods=['GET', 'POST'])
+@app.route("/enemies", endpoint=enemies_no_guid, methods=['GET', 'POST'])
+@swag_from("swagger/get_enemies.yml", endpoint=enemies_no_guid, methods=['GET'])
+@swag_from("swagger/create_enemy.yml", endpoint=enemies_no_guid, methods=['POST'])
 def enemies_methods():
   if request.method == "GET":
     enemies = read_json_file("../data/combatants/enemies.json")
@@ -230,7 +174,10 @@ def enemies_methods():
     resp = Response("UNSUPPORTED METHOD /enemies [{}]".format(request.method), status=400)
   return resp
 
-@app.route("/enemies/<guid>", methods=['GET', 'PUT', 'DELETE'])
+@app.route("/enemies/<guid>", endpoint=enemies_guid, methods=['GET', 'PUT', 'DELETE'])
+@swag_from("swagger/get_enemy.yml", endpoint=enemies_guid, methods=['GET'])
+@swag_from("swagger/update_enemy.yml", endpoint=enemies_guid, methods=['PUT'])
+@swag_from("swagger/delete_enemy.yml", endpoint=enemies_guid, methods=['DELETE'])
 def enemy_methods(guid):
   if request.method == "GET":
     resp = get_object_response("../data/combatants/enemies", guid)
@@ -242,27 +189,3 @@ def enemy_methods(guid):
   else:
     resp = Response("UNSUPPORTED METHOD /enemies/<id> [{}]".format(request.method), status=400)
   return resp
-
-
-# ROUTES TESTED:
-# /battles
-#   GET
-#   POST
-# /battles/<guid>
-#   GET
-#   POST
-#   DELETE
-# /players
-#   GET             DONE
-#   POST            DONE
-# /players/<guid>
-#   GET             DONE
-#   PUT             DONE
-#   DELETE          DONE
-# /enemies
-#   GET             DONE
-#   POST            DONE
-# /enemies/<guid>
-#   GET             DONE
-#   PUT             DONE
-#   DELETE          DONE
