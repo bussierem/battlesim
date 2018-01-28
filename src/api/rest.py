@@ -16,19 +16,13 @@ CORS(app)
 @app.route('/', defaults={'path': ''})
 @app.route('/static/<path:path>')
 def serve(path):
-  print(path)
-  cwd = os.getcwd()
-  print(cwd)
-  allFiles = os.listdir("js")
-  print(allFiles);
-  allFiles = os.listdir(static_folder)
-  print(allFiles);
   static_path = cwd+'/'+static_folder
   if(path == ""):
     return send_from_directory(static_path, 'index.html')
   else:
     if(os.path.exists(static_path + "/" + path)):
-      return send_from_directory(static_path, path)
+      static_path,file = os.path.split(static_path + "/" + path)
+      return send_from_directory(static_path, file)
     else:
       return send_from_directory(static_path,  'index.html')
 
