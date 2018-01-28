@@ -8,7 +8,7 @@ from flask_cors import CORS
 import json
 import os
 
-static_folder = 'js/build'
+static_folder = '../js/build'
 app = Flask(__name__,static_folder=static_folder)
 CORS(app)
 
@@ -16,6 +16,13 @@ CORS(app)
 @app.route('/', defaults={'path': ''})
 @app.route('/static/<path:path>')
 def serve(path):
+  print path
+  test = os.path.dirname(os.path.realpath(static_folder+"/index.html"))
+  print test
+  test = os.path.dirname(os.path.realpath(static_folder))
+  print test
+  test = os.path.dirname(os.path.realpath(js))
+  print test
   if(path == ""):
     return send_from_directory(static_folder, 'index.html')
   else:
