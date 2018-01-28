@@ -1,5 +1,7 @@
 Delete a Enemy
 ---
+tags:
+  - Enemies
 parameters:
   - name: guid
     in: path

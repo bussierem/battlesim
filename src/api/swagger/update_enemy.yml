@@ -1,5 +1,7 @@
 Update an Enemy by IB
 ---
+tags:
+  - Enemies
 definitions:
   Attack:
     type: object

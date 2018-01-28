@@ -1,5 +1,7 @@
 Retrieve a Player by ID
 ---
+tags:
+  - Players
 definitions:
   Player:
     type: object

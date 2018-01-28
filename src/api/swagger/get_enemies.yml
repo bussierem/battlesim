@@ -1,5 +1,7 @@
 Get list of of all Enemies
 ---
+tags:
+  - Enemies
 responses:
   200:
     description: Enemies sent

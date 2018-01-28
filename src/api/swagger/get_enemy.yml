@@ -1,5 +1,7 @@
 Retrieve a Enemy by ID
 ---
+tags:
+  - Enemies
 definitions:
   Enemy:
     type: object

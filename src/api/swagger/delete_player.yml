@@ -1,5 +1,7 @@
 Delete a Player by ID
 ---
+tags:
+  - Players
 parameters:
   - name: guid
     in: path
