@@ -8,14 +8,17 @@ import './App.css';
 import BeingList from './BeingList'
 import CreateCombatant from './CreateCombatant';
 const Api = require('./Api');
+const SchemaLoader = require('./SchemaLoader');
 
 class App extends Component {
   constructor(props){
     super(props);
+    const allSchemas = SchemaLoader("Player","Enemy");
     this.state = {
       players:[],
       enemies:[],
-      round:-1
+      round:-1,
+      allSchemas
     };
     /*const battle = Api.getBattle().then((response)=>{
       console.log(response);
@@ -42,8 +45,8 @@ class App extends Component {
       </Panel.Title>
       <Panel.Collapse>
       <Panel.Body>
-        <CreateCombatant type='Player'/>
-        <CreateCombatant type='Enemy'/>
+        <CreateCombatant schema={this.state.allSchemas["Player"]}/>
+        <CreateCombatant schema={this.state.allSchemas["Enemy"]}/>
       </Panel.Body>
       </Panel.Collapse>
       </Panel>
