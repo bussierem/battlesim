@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import {Grid,Row,Col} from 'react-bootstrap';
+import {Grid,Row,Col,Panel} from 'react-bootstrap';
 import {Accordion} from 'react-accessible-accordion';
 import './libs/react-accessible-accordion.css';
 import './libs/bootstrap.min.css';
 import './App.css';
 
 import BeingList from './BeingList'
+import CreateCombatant from './CreateCombatant';
 const Api = require('./Api');
 
 class App extends Component {
@@ -14,16 +15,17 @@ class App extends Component {
     this.state = {
       players:[],
       enemies:[],
-      step:0
+      round:-1
     };
-    const battle = Api.getBattle().then((response)=>{
+    /*const battle = Api.getBattle().then((response)=>{
+      console.log(response);
       response.json().then((battle)=>{
          this.setState({
             players:battle.steps[0].players,
             enemies:battle.steps[0].enemies
          });
       });
-    });
+    });*/
   }
   render() {
     return (
@@ -32,6 +34,21 @@ class App extends Component {
         <h2>Battle Simulator <small> v 0.00001 </small></h2>
       </div>
       <Grid>
+      <Row className='row' id='headerRow'>
+      <Col xs={12}>
+      <Panel defaultExpanded>
+      <Panel.Title toggle>
+        <h3> Actions </h3>
+      </Panel.Title>
+      <Panel.Collapse>
+      <Panel.Body>
+        <CreateCombatant type='Player'/>
+        <CreateCombatant type='Enemy'/>
+      </Panel.Body>
+      </Panel.Collapse>
+      </Panel>
+      </Col>
+      </Row>
 			<Row className='row' id='topRow'>
 				<Col sm = {6} className='col'>
           <BeingList beings={this.state.players} type="Players"/>     
@@ -41,8 +58,15 @@ class App extends Component {
 				</Col>
 			</Row>
 			<Row className='row' id='bottomRow'>
-				 <Col xs={12} md={8}>
-					<h3>Battle Simulation</h3>
+          <h3> Round </h3>
+				 <Col xs={4} className='pull-left'>
+					<h3>Player</h3>
+				</Col>
+        <Col xs={4} className='center'>
+					<h3>Battle</h3>
+				</Col>
+        <Col xs={4} className ='pull-right'>
+					<h3>Enemy</h3>
 				</Col>
 			</Row>
 		</Grid>

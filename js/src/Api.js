@@ -1,7 +1,28 @@
 const serverUrl = 'https://battle-sim.herokuapp.com';
 
 module.exports = {
-  getBattle: ()=>{
+  getBattles: ()=>{
     return fetch(`${serverUrl}/battles`);
+  },
+  getBattle:()=>{
+    
+  },
+  createBattle:()=>{
+    
+  },
+  deleteBattle:()=>{
+    
+  },
+  createPlayer:()=>{
+    
+  },
+  editPlayer:()=>{
+    
+  },
+  getPlayers:()=>{
+    
+  },
+  getPlayer:()=>{
+    
   }
 }
