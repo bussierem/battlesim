@@ -1,9 +1,9 @@
-import './libs/react-accessible-accordion.css';
-import './App.css';
-import './libs/bootstrap.min.css';
 import React, { Component } from 'react';
-import {Grid,Row,Col,PageHeader} from 'react-bootstrap';
+import {Grid,Row,Col} from 'react-bootstrap';
 import {Accordion} from 'react-accessible-accordion';
+import './libs/react-accessible-accordion.css';
+import './libs/bootstrap.min.css';
+import './App.css';
 
 import BeingList from './BeingList'
 const Api = require('./Api');
@@ -16,32 +16,33 @@ class App extends Component {
       enemies:[],
       step:0
     };
-    const battle = Api.getBattle().then((battle)=>{
-      console.log(battle);
-      this.setState({
-        players:battle.steps[0].players,
-        enemies:battle.steps[0].enemies
+    const battle = Api.getBattle().then((response)=>{
+      response.json().then((battle)=>{
+         this.setState({
+            players:battle.steps[0].players,
+            enemies:battle.steps[0].enemies
+         });
       });
     });
   }
   render() {
     return (
       <div className="app">
-      <PageHeader>
-        Battle Simulator <small> v 0.00001 </small>
-      </PageHeader>
+      <div className='pageHeader'>
+        <h2>Battle Simulator <small> v 0.00001 </small></h2>
+      </div>
       <Grid>
 			<Row className='row' id='topRow'>
-				<Col xs={6} md = {4} className='col'>
-          <BeingList beings={this.state.players}/>     
+				<Col sm = {6} className='col'>
+          <BeingList beings={this.state.players} type="Players"/>     
 				</Col>
-				<Col xs={6} md = {4} className='col'>
-					<BeingList beings={this.state.enemies}/>
+				<Col sm = {6} className='col'>
+					<BeingList beings={this.state.enemies} type="Enemies"/>
 				</Col>
 			</Row>
 			<Row className='row' id='bottomRow'>
 				 <Col xs={12} md={8}>
-					Battle Simulation
+					<h3>Battle Simulation</h3>
 				</Col>
 			</Row>
 		</Grid>
