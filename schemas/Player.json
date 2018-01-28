@@ -25,7 +25,7 @@
     "spells": {
       "type": "array",
       "items": {
-        "type": "Magic",
+        "type": "Magic"
       },
       "default": []
     },
