@@ -16,13 +16,9 @@ CORS(app)
 @app.route('/', defaults={'path': ''})
 @app.route('/static/<path:path>')
 def serve(path):
-  print path
-  test = os.path.dirname(os.path.realpath(static_folder+"/index.html"))
-  print test
-  test = os.path.dirname(os.path.realpath(static_folder))
-  print test
-  test = os.path.dirname(os.path.realpath(js))
-  print test
+  print(path)
+  cwd = os.getcwd()
+  print(cwd)
   if(path == ""):
     return send_from_directory(static_folder, 'index.html')
   else:
