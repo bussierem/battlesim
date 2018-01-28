@@ -1,10 +1,8 @@
 Update an Enemy by IB
 ---
-tags:
-  - enemies
 definitions:
-  - schema:
-    id: Attack
+  Attack:
+    type: object
     properties:
       atk_type:
         type: string
