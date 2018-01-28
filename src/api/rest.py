@@ -9,8 +9,20 @@ import json
 import os
 
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='js/build')
 CORS(app)
+
+# Thanks - https://stackoverflow.com/questions/44209978/serving-a-create-react-app-with-flask
+@app.route('/', defaults={'path': ''})
+@app.route('/static/<path:path>')
+def serve(path):
+  if(path == ""):
+    return send_from_directory('react_app/build', 'index.html')
+  else:
+    if(os.path.exists("react_app/build/" + path)):
+      return send_from_directory('react_app/build', path)
+    else:
+      return send_from_directory('react_app/build', 'index.html')
 
 def get_object_response(fpath, guid):
   try:
