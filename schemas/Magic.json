@@ -3,12 +3,8 @@
   "type": "object",
   "base_class": "Attack",
   "properties": {
-    "level": {
+    "spell_lvl": {
       "type": "integer"
-    },
-    "type": {
-      "type": "string",
-      "default": "Magic"
     }
   }
 }

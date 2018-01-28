@@ -13,7 +13,7 @@
     "health": {
       "default": 10
     },
-    "initiative": {
+    "init": {
       "default": 0
     },
     "defense": {
