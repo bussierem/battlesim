@@ -1,5 +1,7 @@
 Get list of of all Players
 ---
+tags:
+  - Players
 responses:
   200:
     description: Players sent

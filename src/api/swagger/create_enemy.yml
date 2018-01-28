@@ -1,5 +1,7 @@
 Create a new Enemy
 ---
+tags:
+  - Players
 definitions:
   Attack:
     type: object
