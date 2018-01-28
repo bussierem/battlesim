@@ -2,10 +2,10 @@
   "title": "Attack",
   "type": "object",
   "properties": {
-    "type": {
+    "atk_type": {
       "type": "string"
     },
-    "hit": {
+    "hit_bonus": {
       "type": "integer"
     },
     "damage": {

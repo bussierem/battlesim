@@ -9,7 +9,7 @@
     "health": {
       "type": "integer"
     },
-    "initiative": {
+    "init": {
       "type": "integer"
     },
     "defense": {
