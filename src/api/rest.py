@@ -151,9 +151,9 @@ def register_api(view, endpoint, url, id_methods=['GET', 'PUT', 'DELETE'], pk='g
     app.add_url_rule('%s<%s:%s>' % (url, pk_type, pk), view_func=view_func,
                      methods=id_methods)
 
-register_api(PlayerAPI, 'player_api', '/players/')
-register_api(EnemyAPI, 'enemy_api', '/enemies/')
-register_api(BattleAPI, 'battle_api', '/battles/', id_methods=['GET', 'DELETE'])
+# register_api(PlayerAPI, 'player_api', '/players/')
+# register_api(EnemyAPI, 'enemy_api', '/enemies/')
+# register_api(BattleAPI, 'battle_api', '/battles/', id_methods=['GET', 'DELETE'])
 
 @app.route("/spec")
 def spec():
