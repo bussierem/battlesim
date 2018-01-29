@@ -3,7 +3,8 @@
   "type": "object",
   "properties": {
     "atk_type": {
-      "type": "string"
+      "type": "string",
+	  "enum": ["Melee","Ranged"]
     },
     "hit_bonus": {
       "type": "integer"

@@ -2,6 +2,7 @@
   "title": "Magic",
   "type": "object",
   "base_class": "Attack",
+  "excludes":["atk_type"],
   "properties": {
     "spell_lvl": {
       "type": "integer"

@@ -23,6 +23,7 @@ module.exports = (...schemaNames)=>{
     if(curSchema.base_class){
       const baseSchema = loadSchema(curSchema.base_class);
       curSchema.properties = merge(curSchema.properties,baseSchema.properties);
+      (curSchema.excludes || []).forEach(excludedProp=>delete curSchema.properties[excludedProp]);
     }
     Object.keys(curSchema.properties).filter(prop=>getExpandableType(curSchema.properties[prop])).forEach(prop=>{
       const expandedSchema = loadSchema(getExpandableType(curSchema.properties[prop]));
