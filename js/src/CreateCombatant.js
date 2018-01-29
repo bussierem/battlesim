@@ -14,9 +14,15 @@ class CreateCombatant extends Component{
   }
 
   handleSubmit(combatant){
-    console.log(combatant.formData);
-    console.log(JSON.stringify(combatant.formData));
-    //this.props.createCombatant().then()
+    this.props.endpoint.post(combatant.formData,{
+      fail:(e)=>{
+        console.log(e);
+      },
+      success:()=>{
+        console.log("Created it woo woo woo");
+      },
+      loading:this.props.loading
+    });
   }
   handleClose(){
     this.setState({show:false});
