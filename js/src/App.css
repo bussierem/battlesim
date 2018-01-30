@@ -1,4 +1,4 @@
-html,body,#root,.app{
+html,body,#root,.app,._loading-overlay{
 	height:100%;
   width:100%;
 }
@@ -61,4 +61,4 @@ h3{
 .modal-body{
   height:90%;
   overflow-y:scroll;
-}	
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Grid,Row,Col,Panel} from 'react-bootstrap';
 import {Accordion} from 'react-accessible-accordion';
+import Loadable from 'react-loading-overlay';
 import './libs/react-accessible-accordion.css';
 import './libs/bootstrap.min.css';
 import './App.css';
@@ -15,21 +16,18 @@ class App extends Component {
     super(props);
     const allSchemas = SchemaLoader("Player","Enemy");
     this.validateSchema = this.validateSchema.bind(this);
+    this.loading = this.loading.bind(this);
     this.state = {
       players:[],
       enemies:[],
       round:-1,
-      allSchemas
+      allSchemas,
+      loading:false
     };
-    /*const battle = Api.getBattle().then((response)=>{
-      console.log(response);
-      response.json().then((battle)=>{
-         this.setState({
-            players:battle.steps[0].players,
-            enemies:battle.steps[0].enemies
-         });
-      });
-    });*/
+  }
+  
+  loading(loading){
+    this.setState({loading});
   }
   
   validateSchema(fullBody,errors){
@@ -56,6 +54,9 @@ class App extends Component {
   render() {
     return (
       <div className="app">
+      <Loadable
+        spinner
+        active={this.state.loading}>
       <div className='pageHeader'>
         <h2>Battle Simulator <small> v 0.00001 </small></h2>
       </div>
@@ -68,8 +69,8 @@ class App extends Component {
       </Panel.Title>
       <Panel.Collapse>
       <Panel.Body>
-        <CreateCombatant schema={this.state.allSchemas["Player"]} validateSchema={this.validateSchema}/>
-        <CreateCombatant schema={this.state.allSchemas["Enemy"]} validateSchema = {this.validateSchema}/>
+        <CreateCombatant schema={this.state.allSchemas["Player"]} validateSchema={this.validateSchema} loading = {this.loading}/>
+        <CreateCombatant schema={this.state.allSchemas["Enemy"]} validateSchema = {this.validateSchema} loading = {this.loading}/>
       </Panel.Body>
       </Panel.Collapse>
       </Panel>
@@ -96,7 +97,8 @@ class App extends Component {
 				</Col>
 			</Row>
 		</Grid>
-      </div>
+    </Loadable>
+    </div>
     );
   }
 }
