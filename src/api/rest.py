@@ -2,7 +2,7 @@ from objects.attacks.Attack import *
 from objects.attacks.Magic import *
 from systems.CombatSystem import *
 from systems.Utilities import *
-import MongoInterface as mongo
+import api.MongoInterface as mongo
 
 from flask import Flask, request, Response, send_from_directory
 from flask_cors import CORS
