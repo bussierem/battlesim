@@ -164,8 +164,7 @@ def enemies_methods():
     enemies = mongo.find_multiple(collection, {})
     resp = Response(json.dumps(enemies, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
-    try:
-      resp = create_combatant(request, 'enemies')
+    resp = create_combatant(request, 'enemies')
   else:
     resp = Response("UNSUPPORTED METHOD /enemies [{}]".format(request.method), status=400)
   return resp
