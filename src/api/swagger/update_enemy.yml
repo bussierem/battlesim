@@ -53,6 +53,8 @@ responses:
   204:
     description: Enemy updated
     schema:
-      id: guid
-      type: string
-      descriptions: The ID of the Enemy (will be the same)
+      type: object
+      properties:
+        ID:
+          type: string
+          descriptions: The ID of the Enemy (will be same)
