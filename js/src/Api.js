@@ -2,7 +2,7 @@ const serverUrl = 'https://battle-sim.herokuapp.com';
 const request = require('request');
 
 const buildUrl = (...urlParts)=>urlParts.reduce((currentUrl,urlPart)=>`${currentUrl}/${urlPart}`,serverUrl);
-const handleResponseWrapper = (fail=e=>console.log(e),success,loading=()=>{})=>{
+const handleResponseWrapper = (fail=e=>console.log(e),success=()=>{},loading=()=>{})=>{
   loading(true);
   return (err,response,body)=>{
     handleResponse(err,response,body,fail,success);

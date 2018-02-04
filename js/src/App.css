@@ -62,3 +62,7 @@ h3{
   height:90%;
   overflow-y:scroll;
 }
+
+#accordionTitle{
+  overflow-y:hidden;
+}
