@@ -1,7 +1,7 @@
 from pymongo import MongoClient, ASCENDING, errors
 from bson.objectid import ObjectId
 import datetime
-import os
+import re
 
 DB_NAME = 'battle-sim'
 DB_CONNECT = "mongodb://{}:{}@ds119078.mlab.com:19078/battle-sim"
