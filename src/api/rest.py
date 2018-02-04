@@ -34,7 +34,8 @@ def get_object_response(dtype, guid):
   record = mongo.find_single(collection, mongo.id_eq_criteria(guid))
   if record:
     return Response(bson.dumps(record, indent=2), status=200, mimetype="application/json")
-  return Response("INVALID GUID {}".format(guid), status=404)
+  error = { "error": "INVALID GUID {}".format(guid) }
+  return Response(json.dumps(error, indent=2), status=404)
 
 def delete_object(dtype, guid):
   collection = get_collection(dtype)
@@ -44,30 +45,27 @@ def delete_object(dtype, guid):
   mongo.delete_first(collection, criteria)
   return Response(status=204)
 
-def add_combatant_to_record(ctype, guid):
-  record_file = "../data/combatants/{}.json".format(ctype)
-  data = read_json_file(record_file)
-  if guid not in data[ctype]: # for update
-    data[ctype].append(guid)
-  write_data_to_json(data, record_file)
-
 def create_combatant(request, ctype):
   combatant = request.get_json()
   if combatant == None:
-    return Response("ERROR WITH POST DATA", status=400)
+    error = { "error": "ERROR WITH POST DATA" }
+    return Response(json.dumps(error, indent=2), status=400)
   new_combatant = Player(**combatant) if ctype == "players" else Enemy(**combatant)
   collection = get_collection(ctype)
   new_id = mongo.create_single(collection, new_combatant.to_json())
-  return Response("ID: {}".format(new_id), status=201)
+  out = { "ID": new_id }
+  return Response(json.dumps(out), status=201)
 
 def update_combatant(request, ctype, guid):
   combatant = request.get_json()
   if combatant == None:
-    return Response("ERROR WITH POST DATA", status=400)
+    error = { "error": "ERROR WITH POST DATA" }
+    return Response(json.dumps(error, indent=2), status=400)
   updated_combatant = Player(**combatant) if ctype == "players" else Enemy(**combatant)
   collection = get_collection(ctype)
   cid = mongo.update_single(collection, guid, update_combatant.to_json())
-  return Response("ID: {}".format(cid), status=204)
+  out = { "ID": cid }
+  return Response(json.dumps(out), status=204)
 
 
 # ------------------ /
@@ -102,7 +100,8 @@ def battles_methods():
   elif request.method == "POST":
     teams = request.get_json()
     if teams == None:
-      resp = Response("ERROR WITH POST DATA", status=400)
+      error = { "error": "ERROR WITH POST DATA" }
+      resp = Response(json.dumps(error, indent=2), status=400)
     else:
       system = CombatSystem(teams['players'], teams['enemies'])
       overview = system.play_full_combat()
@@ -111,7 +110,8 @@ def battles_methods():
       overview = mongo.find_single(collection, mongo.id_eq_criteria(ovid))
       resp = Response(bson.dumps(overview, indent=2), status=200, mimetype="application/json")
   else:
-    resp = Response("UNSUPPORTED METHOD /battles [{}]".format(request.method), status=400)
+    error = { "error": "UNSUPPORTED METHOD /battles [{}]".format(request.method) }
+    resp = Response(json.dumps(error, indent=2), status=400)
   return resp
 
 @app.route("/battles/<guid>", endpoint='battles_guid', methods=['GET', 'DELETE'])
@@ -122,7 +122,8 @@ def battle_methods(guid):
   elif request.method == "DELETE":
     resp = delete_object("battles", guid)
   else:
-    resp = Response("UNSUPPORTED METHOD /battles/<id> [{}]".format(request.method), status=400)
+    error = { "error": "UNSUPPORTED METHOD /battles/<id> [{}]".format(request.method) }
+    resp = Response(json.dumps(error, indent=2), status=400)
   return resp
 
 @app.route("/players", endpoint='players_no_guid', methods=['GET', 'POST'])
@@ -140,9 +141,11 @@ def players_methods():
     try:
       resp = create_combatant(request, 'players')
     except TypeError as e:
-      resp = Response("ERROR WITH POST DATA: {}".format(e), status=400)
+      error = { "error": "ERROR WITH POST DATA: {}".format(e) }
+      resp = Response(json.dumps(error, indent=2), status=400)
   else:
-    resp = Response("UNSUPPORTED METHOD /players [{}]".format(request.method), status=400)
+    error = { "error": "UNSUPPORTED METHOD /players [{}]".format(request.method) }
+    resp = Response(json.dumps(error, indent=2), status=400)
   return resp
 
 @app.route("/players/<guid>", endpoint='players_guid', methods=['GET', 'PUT', 'DELETE'])
@@ -157,7 +160,8 @@ def player_methods(guid):
   elif request.method == "DELETE":
     resp = delete_object('players', guid)
   else:
-    resp = Response("UNSUPPORTED METHOD /players/<id> [{}]".format(request.method), status=400)
+    error = { "error": "UNSUPPORTED METHOD /players/<id> [{}]".format(request.method) }
+    resp = Response(json.dumps(error, indent=2), status=400)
   return resp
 
 @app.route("/enemies", endpoint='enemies_no_guid', methods=['GET', 'POST'])
@@ -169,9 +173,14 @@ def enemies_methods():
     enemies = mongo.find_multiple(collection, {})
     resp = Response(bson.dumps(enemies, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
-    resp = create_combatant(request, 'enemies')
+    try:
+      resp = create_combatant(request, 'enemies')
+    except TypeError as e:
+      error = { "error": "ERROR WITH POST DATA: {}".format(e) }
+      resp = Response(json.dumps(error, indent=2), status=400)
   else:
-    resp = Response("UNSUPPORTED METHOD /enemies [{}]".format(request.method), status=400)
+    error = { "error": "UNSUPPORTED METHOD /enemies [{}]".format(request.method) }
+    resp = Response(json.dumps(error, indent=2), status=400)
   return resp
 
 @app.route("/enemies/<guid>", endpoint='enemies_guid', methods=['GET', 'PUT', 'DELETE'])
@@ -186,5 +195,6 @@ def enemy_methods(guid):
   elif request.method == "DELETE":
     resp = delete_object('enemies', guid)
   else:
-    resp = Response("UNSUPPORTED METHOD /enemies/<id> [{}]".format(request.method), status=400)
+    error = { "error": "UNSUPPORTED METHOD /enemies/<id> [{}]".format(request.method) }
+    resp = Response(json.dumps(error, indent=2), status=400)
   return resp

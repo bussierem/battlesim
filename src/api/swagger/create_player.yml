@@ -71,5 +71,8 @@ responses:
   201:
     description: Player created
     schema:
-      type: string
-      descriptions: The ID of the new Player
+      type: object
+      properties:
+        ID:
+          type: string
+          descriptions: The ID of the new Player

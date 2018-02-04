@@ -9,7 +9,7 @@ responses:
       id: Enemies
       type: object
       properties:
-        players:
+        enemies:
           type: array
           description: List of Enemy IDs
           items:

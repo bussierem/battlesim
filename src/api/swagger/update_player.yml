@@ -81,6 +81,8 @@ responses:
   204:
     description: Player updated
     schema:
-      id: guid
-      type: string
-      descriptions: The ID of the Player (will be the same)
+      type: object
+      properties:
+        ID:
+          type: string
+          descriptions: The ID of the new Player (will be the same)
