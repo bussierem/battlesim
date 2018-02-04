@@ -2,12 +2,10 @@ from objects.attacks.Attack import *
 from systems.Dice import roll_dice
 
 import random
-import uuid
 import copy
 
 class Combatant(object):
     def __init__(self, name, ctype, health, initiative_mod, defense, attack_list):
-      self.id = str(uuid.uuid4())
       self.name = name
       self.type = ctype
       self.hp = health
@@ -17,7 +15,6 @@ class Combatant(object):
 
     def to_json(self):
       return {
-        'id': self.id,
         'name': self.name,
         'type': self.type,
         'health': self.hp,
