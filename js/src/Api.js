@@ -1,8 +1,8 @@
 const serverUrl = 'https://battle-sim.herokuapp.com';
 const request = require('request');
 
-const buildUrl = (urlParts)=>urlParts.reduce((currentUrl,urlPart)=>`${currentUrl}/${urlPart}`,serverUrl);
-const handleResponseWrapper = (fail,success,loading)=>{
+const buildUrl = (...urlParts)=>urlParts.reduce((currentUrl,urlPart)=>`${currentUrl}/${urlPart}`,serverUrl);
+const handleResponseWrapper = (fail=e=>console.log(e),success,loading=()=>{})=>{
   loading(true);
   return (err,response,body)=>{
     handleResponse(err,response,body,fail,success);
@@ -27,10 +27,13 @@ const handleResponse = (err,response,body,fail,success) => {
 
 const get = (route) => (id,{fail,success,loading})=> request.get(buildUrl(route,id),handleResponseWrapper(fail,success,loading));
 const getAll = (route) => ({fail,success,loading})=> request.get(buildUrl(route),handleResponseWrapper(fail,success,loading));
-const post = (route) => (body,{fail,success,loading})=> request.post({url:buildUrl(route),body},handleResponseWrapper(fail,success,loading));
-const put = (route) =>(id,body,{fail,success,loading}) => request.put({url:buildUrl(route,id),body},handleResponseWrapper(fail,success,loading));
+const post = (route) => (body,{fail,success,loading})=> {
+	console.log(body);
+	return request.post({url:buildUrl(route),body:JSON.stringify(body)},handleResponseWrapper(fail,success,loading));
+};
+const put = (route) =>(id,body,{fail,success,loading}) => request.put({url:buildUrl(route,id),body:JSON.stringify(body)},handleResponseWrapper(fail,success,loading));
 const del = (route) => (id,{fail,success,loading})=>request.delete(buildUrl(route,id),handleResponseWrapper(fail,success,loading));
-const httpMethods = [get,getAll,post,put,del];
+const httpMethods = {get,getAll,post,put,del};
 
 const endpoints = {
   player:{
@@ -41,6 +44,6 @@ const endpoints = {
   }
 };
 
-Object.keys(endpoints).forEach(endpoint=>httpMethods.forEach(httpMethod=>endpoints[endpoint][httpMethod]=httpMethod(endpoints[endpoint].route)));
+Object.keys(endpoints).forEach(endpoint=>Object.keys(httpMethods).forEach(httpMethodName=>endpoints[endpoint][httpMethodName]=httpMethods[httpMethodName](endpoints[endpoint].route)));
 
 module.exports = endpoints; 

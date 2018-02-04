@@ -22,12 +22,38 @@ class App extends Component {
       enemies:[],
       round:-1,
       allSchemas,
-      loading:false
+      loading:true
     };
   }
   
+  componentDidMount(){
+    this.loading();
+  }
+  
   loading(loading){
-    this.setState({loading});
+    const refreshAll = (refreshFns,successProps,cb)=>{
+      const fnChain = [];
+      let i;
+      for(i = 0; i<refreshFns.length; i++){
+        const curSpot = i;
+        const curFn = refreshFns[curSpot];
+        const nextFn = i === refreshFns.length-1 ? cb : ()=>fnChain[curSpot+1]();
+        fnChain.push(()=>curFn({
+          success:(prop)=>{
+            this.setState({[successProps[i]]:prop});
+            nextFn();
+          },
+          fail:nextFn
+        }));
+      }
+      fnChain[0](0)
+    };
+    if(!loading){
+      refreshAll([Api.player.getAll,Api.enemy.getAll],["players","enemies"],()=>this.setState({loading}));
+    }
+    else{
+      this.setState({loading});
+    }
   }
   
   validateSchema(fullBody,errors){
@@ -69,8 +95,8 @@ class App extends Component {
       </Panel.Title>
       <Panel.Collapse>
       <Panel.Body>
-        <CreateCombatant schema={this.state.allSchemas["Player"]} validateSchema={this.validateSchema} loading = {this.loading}/>
-        <CreateCombatant schema={this.state.allSchemas["Enemy"]} validateSchema = {this.validateSchema} loading = {this.loading}/>
+        <CreateCombatant schema={this.state.allSchemas["Player"]} validateSchema={this.validateSchema} loading = {this.loading} endpoint={Api.player}/>
+        <CreateCombatant schema={this.state.allSchemas["Enemy"]} validateSchema = {this.validateSchema} loading = {this.loading} endpoint = {Api.enemy}/>
       </Panel.Body>
       </Panel.Collapse>
       </Panel>
