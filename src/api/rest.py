@@ -63,8 +63,8 @@ def update_combatant(request, ctype, guid):
     return Response(json.dumps(error, indent=2), status=400)
   updated_combatant = Player(**combatant) if ctype == "players" else Enemy(**combatant)
   collection = get_collection(ctype)
-  cid = mongo.update_single(collection, guid, updated_combatant.to_json())
-  out = { "id": cid }
+  mongo.update_single(collection, guid, updated_combatant.to_json())
+  out = { "id": guid }
   return Response(bson.dumps(out), status=204)
 
 
