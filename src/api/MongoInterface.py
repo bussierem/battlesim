@@ -49,7 +49,7 @@ def gt_eq_criteria(key, value, criteria={}):
   return { **criteria, key: { '$gte': value } }
 
 def eq_criteria(key, value, criteria={}):
-  return { **criteria, key: value } }
+  return { **criteria, key: value }
 
 def not_eq_criteria(key, value, criteria={}):
   return { **criteria, key: { '$ne': value } }
