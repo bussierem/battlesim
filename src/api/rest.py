@@ -37,7 +37,7 @@ def get_object_response(dtype, guid):
 
 def delete_object(dtype, guid):
   collection = get_collection(dtype)
-  criteria = mongo.id_eq_criteria(guid))
+  criteria = mongo.id_eq_criteria(guid)
   if mongo.find_single(collection, criteria) == None:
     return Response(status=404)
   mongo.delete_first(collection, criteria)
