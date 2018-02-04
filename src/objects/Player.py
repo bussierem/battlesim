@@ -14,7 +14,8 @@ class Player(Combatant):
       kwargs.get('attacks', [])
     )
     self.level = kwargs.get('level', 1)
-    self.spells = kwargs.get('spells', [])
+    spell_list = kwargs.get('spells', [])
+    self.spells = [Magic(**spell) for spell in spell_list]
     self.consumables = kwargs.get('consumables', 0)
     self.regenerators = kwargs.get('regenerators', 0)
 
