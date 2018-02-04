@@ -1,13 +1,14 @@
 from pymongo import MongoClient, ASCENDING, errors
 from bson.objectid import ObjectId
 import datetime
+import re
 
 DB_NAME = 'battle-sim'
 DB_CONNECT = "mongodb://{}:{}@ds119078.mlab.com:19078/battle-sim"
 
 # UTILITY FUNCTIONS
 def rupff():
-  with open('../../data/secrets', 'r') as f:
+  with open('data/secrets', 'r') as f:
     return ["".join(re.findall(r'X\w',x)).replace('X','') for x in f.read().split('=')]
 
 def connect_to_database():
@@ -49,7 +50,7 @@ def gt_eq_criteria(key, value, criteria={}):
   return { **criteria, key: { '$gte': value } }
 
 def eq_criteria(key, value, criteria={}):
-  return { **criteria, key: value } }
+  return { **criteria, key: value }
 
 def not_eq_criteria(key, value, criteria={}):
   return { **criteria, key: { '$ne': value } }

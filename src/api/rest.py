@@ -2,7 +2,7 @@ from objects.attacks.Attack import *
 from objects.attacks.Magic import *
 from systems.CombatSystem import *
 from systems.Utilities import *
-import MongoInterface as mongo
+import api.MongoInterface as mongo
 
 from flask import Flask, request, Response, send_from_directory
 from flask_cors import CORS
@@ -37,7 +37,7 @@ def get_object_response(dtype, guid):
 
 def delete_object(dtype, guid):
   collection = get_collection(dtype)
-  criteria = mongo.id_eq_criteria(guid)])
+  criteria = mongo.id_eq_criteria(guid)
   if mongo.find_single(collection, criteria) == None:
     return Response(status=404)
   mongo.delete_first(collection, criteria)
@@ -129,8 +129,11 @@ def battle_methods(guid):
 @swag_from("swagger/create_player.yml", endpoint='players_no_guid', methods=['POST'])
 def players_methods():
   if request.method == "GET":
-    players = get_collection('players')
+    collection = get_collection('players')
     players = mongo.find_multiple(collection, {})
+    print("====================")
+    print("Players:  ", players)
+    print("====================")
     resp = Response(json.dumps(players, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
     try:
@@ -161,12 +164,11 @@ def player_methods(guid):
 @swag_from("swagger/create_enemy.yml", endpoint='enemies_no_guid', methods=['POST'])
 def enemies_methods():
   if request.method == "GET":
-    enemies = get_collection('enemies')
+    collection = get_collection('enemies')
     enemies = mongo.find_multiple(collection, {})
     resp = Response(json.dumps(enemies, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
-    try:
-      resp = create_combatant(request, 'enemies')
+    resp = create_combatant(request, 'enemies')
   else:
     resp = Response("UNSUPPORTED METHOD /enemies [{}]".format(request.method), status=400)
   return resp
