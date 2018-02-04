@@ -10,7 +10,7 @@ DB_CONNECT = "mongodb://{}:{}@ds119078.mlab.com:19078/battle-sim"
 def rupff():
   print("=========================================")
   print("CURRENT WORKING DIRECTORY: ", os.getcwd())
-  print(os.path.dirname("../../../"))
+  print(os.listdir(os.getcwd()))
   print("=========================================")
   with open('../../../data/secrets', 'r') as f:
     return ["".join(re.findall(r'X\w',x)).replace('X','') for x in f.read().split('=')]
