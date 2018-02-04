@@ -54,7 +54,7 @@ def create_combatant(request, ctype):
   collection = get_collection(ctype)
   new_id = mongo.create_single(collection, new_combatant.to_json())
   out = { "id": new_id }
-  return Response(json.dumps(out), status=201)
+  return Response(bson.dumps(out), status=201)
 
 def update_combatant(request, ctype, guid):
   combatant = request.get_json()
@@ -65,7 +65,7 @@ def update_combatant(request, ctype, guid):
   collection = get_collection(ctype)
   cid = mongo.update_single(collection, guid, update_combatant.to_json())
   out = { "id": cid }
-  return Response(json.dumps(out), status=204)
+  return Response(bson.dumps(out), status=204)
 
 
 # ------------------ /
