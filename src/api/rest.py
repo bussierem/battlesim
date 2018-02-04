@@ -128,7 +128,7 @@ def battle_methods(guid):
 @swag_from("swagger/create_player.yml", endpoint='players_no_guid', methods=['POST'])
 def players_methods():
   if request.method == "GET":
-    players = get_collection('players')
+    collection = get_collection('players')
     players = mongo.find_multiple(collection, {})
     resp = Response(json.dumps(players, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
