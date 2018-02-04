@@ -23,7 +23,9 @@ class App extends Component {
       enemies:[],
       round:-1,
       allSchemas,
-      loading:true
+      loading:true,
+      player:null,
+      enemy:null
     };
   }
   
@@ -107,8 +109,10 @@ class App extends Component {
       </Panel.Title>
       <Panel.Collapse>
       <Panel.Body>
-        <CreateCombatant schema={this.state.allSchemas["Player"]} validateSchema={this.validateSchemaPlayer} loading = {this.loading} endpoint={Api.player}/>
-        <CreateCombatant schema={this.state.allSchemas["Enemy"]} validateSchema = {this.validateSchema} loading = {this.loading} endpoint = {Api.enemy}/>
+        <CreateCombatant schema={this.state.allSchemas["Player"]} combatant={this.state.player} validateSchema={this.validateSchemaPlayer} 
+                         loading = {this.loading} endpoint={Api.player} clearCombatant = {()=>this.setState({player:null})}/>
+        <CreateCombatant schema={this.state.allSchemas["Enemy"]}  combatant={this.state.enemy} validateSchema = {this.validateSchema} 
+                         loading = {this.loading} endpoint = {Api.enemy} clearCombatant = {()=>this.setState({enemy:null})}/>
       </Panel.Body>
       </Panel.Collapse>
       </Panel>
@@ -116,10 +120,10 @@ class App extends Component {
       </Row>
 			<Row className='row' id='topRow'>
 				<Col sm = {6} className='col'>
-          <BeingList beings={this.state.players} loading = {this.loading} endpoint={Api.player} type="Players"/>     
+          <BeingList beings={this.state.players} setCombatant = {player=>this.setState({player})} loading = {this.loading} endpoint={Api.player} type="Players"/>     
 				</Col>
 				<Col sm = {6} className='col'>
-					<BeingList beings={this.state.enemies} loading = {this.loading} endpoint={Api.enemy} type="Enemies"/>
+					<BeingList beings={this.state.enemies} setCombatant = {enemy=>this.setState({enemy})} loading = {this.loading} endpoint={Api.enemy} type="Enemies"/>
 				</Col>
 			</Row>
 			<Row className='row' id='bottomRow'>

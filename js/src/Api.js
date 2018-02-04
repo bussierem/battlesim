@@ -10,7 +10,7 @@ const handleResponseWrapper = (fail=e=>console.log(e),success=()=>{},loading=()=
   }
 }
 const handleResponse = (err,response,body,fail,success) => {
-  const successCodes = [200,201];
+  const successCodes = [200,201,204];
   let jsonBody = body;
   if(err){
     fail(err);
@@ -36,9 +36,9 @@ const get = (route) => (id,{fail,success,loading})=> request.get(buildUrl(route,
 const getAll = (route) => ({fail,success,loading})=> request.get(buildUrl(route),handleResponseWrapper(fail,success,loading));
 const post = (route) => (body,{fail,success,loading})=> {
 	console.log(body);
-	return request.post({url:buildUrl(route),body:body,json:true},handleResponseWrapper(fail,success,loading));
+	return request.post({url:buildUrl(route),body,json:true},handleResponseWrapper(fail,success,loading));
 };
-const put = (route) =>(id,body,{fail,success,loading}) => request.put({url:buildUrl(route,id),body:body,json:true},handleResponseWrapper(fail,success,loading));
+const put = (route) =>(id,body,{fail,success,loading}) => request.put({url:buildUrl(route,id),body,json:true},handleResponseWrapper(fail,success,loading));
 const del = (route) => (id,{fail,success,loading})=>request.delete(buildUrl(route,id),handleResponseWrapper(fail,success,loading));
 const httpMethods = {get,getAll,post,put,del};
 
