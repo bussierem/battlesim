@@ -130,6 +130,9 @@ def players_methods():
   if request.method == "GET":
     collection = get_collection('players')
     players = mongo.find_multiple(collection, {})
+    print("====================")
+    print("Players:  ", players)
+    print("====================")
     resp = Response(json.dumps(players, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
     try:
@@ -160,7 +163,7 @@ def player_methods(guid):
 @swag_from("swagger/create_enemy.yml", endpoint='enemies_no_guid', methods=['POST'])
 def enemies_methods():
   if request.method == "GET":
-    enemies = get_collection('enemies')
+    collection = get_collection('enemies')
     enemies = mongo.find_multiple(collection, {})
     resp = Response(json.dumps(enemies, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
