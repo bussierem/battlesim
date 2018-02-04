@@ -13,7 +13,7 @@ class Combatant(object):
       self.hp = health
       self.init = initiative_mod
       self.defense = defense
-      self.attacks = attack_list
+      self.attacks = [Attack(**atk) for atk in attack_list]
 
     def to_json(self):
       return {
