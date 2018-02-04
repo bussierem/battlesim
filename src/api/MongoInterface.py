@@ -1,12 +1,17 @@
 from pymongo import MongoClient, ASCENDING, errors
 from bson.objectid import ObjectId
 import datetime
+import os
 
 DB_NAME = 'battle-sim'
 DB_CONNECT = "mongodb://{}:{}@ds119078.mlab.com:19078/battle-sim"
 
 # UTILITY FUNCTIONS
 def rupff():
+  print("=========================================")
+  print("CURRENT WORKING DIRECTORY: ", os.getcwd())
+  print(os.path.dirname("../../../"))
+  print("=========================================")
   with open('../../../data/secrets', 'r') as f:
     return ["".join(re.findall(r'X\w',x)).replace('X','') for x in f.read().split('=')]
 
