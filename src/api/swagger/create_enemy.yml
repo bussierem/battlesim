@@ -47,5 +47,8 @@ responses:
   201:
     description: Enemy created
     schema:
-      type: string
-      descriptions: The ID of the new Enemy
+      type: object
+      properties:
+        id:
+          type: string
+          descriptions: The id of the new Enemy

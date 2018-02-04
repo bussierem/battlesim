@@ -30,8 +30,13 @@ definitions:
         type: string
         description: Damage roll (XdY+B) or range (<min>-<max>)
 parameters:
-  - in: body
-    name: body
+  - name: guid
+    in: path
+    description: ID of the Player to update
+    required: true
+    type: string
+  - name: body
+    in: body
     schema:
       id: Player
       type: object
@@ -81,6 +86,8 @@ responses:
   204:
     description: Player updated
     schema:
-      id: guid
-      type: string
-      descriptions: The ID of the Player (will be the same)
+      type: object
+      properties:
+        id:
+          type: string
+          descriptions: The id of the new Player (will be the same)

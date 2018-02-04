@@ -11,7 +11,7 @@ responses:
       properties:
         players:
           type: array
-          description: List of Player IDs
+          description: List of Player ids
           items:
             type: string
-            description: Player ID
+            description: Player id

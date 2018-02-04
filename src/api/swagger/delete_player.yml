@@ -5,7 +5,7 @@ tags:
 parameters:
   - name: guid
     in: path
-    description: ID of the Player to delete
+    description: id of the Player to delete
     required: true
     type: string
 responses:
