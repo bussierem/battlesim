@@ -3,6 +3,7 @@ from objects.attacks.Magic import *
 from systems.CombatSystem import *
 from systems.Utilities import *
 import api.MongoInterface as mongo
+import bson.json_util as bson
 
 from flask import Flask, request, Response, send_from_directory
 from flask_cors import CORS
@@ -32,7 +33,7 @@ def get_object_response(dtype, guid):
   collection = get_collection(dtype)
   record = mongo.find_single(collection, mongo.id_eq_criteria(guid))
   if record:
-    return Response(json.dumps(record, indent=2), status=200, mimetype="application/json")
+    return Response(bson.dumps(record, indent=2), status=200, mimetype="application/json")
   return Response("INVALID GUID {}".format(guid), status=404)
 
 def delete_object(dtype, guid):
@@ -97,7 +98,7 @@ def battles_methods():
   if request.method == "GET":
     collection = get_collection('battles')
     battles = mongo.find_multiple(collection, {})
-    resp = Response(json.dumps(battles, indent=2), status=200, mimetype="application/json")
+    resp = Response(bson.dumps(battles, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
     teams = request.get_json()
     if teams == None:
@@ -108,7 +109,7 @@ def battles_methods():
       collection = get_collection('overviews')
       ovid = mongo.create_single(collection, overview)
       overview = mongo.find_single(collection, mongo.id_eq_criteria(ovid))
-      resp = Response(json.dumps(overview, indent=2), status=200, mimetype="application/json")
+      resp = Response(bson.dumps(overview, indent=2), status=200, mimetype="application/json")
   else:
     resp = Response("UNSUPPORTED METHOD /battles [{}]".format(request.method), status=400)
   return resp
@@ -134,7 +135,7 @@ def players_methods():
     print("====================")
     print("Players:  ", players)
     print("====================")
-    resp = Response(json.dumps(players, indent=2), status=200, mimetype="application/json")
+    resp = Response(bson.dumps(players, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
     try:
       resp = create_combatant(request, 'players')
@@ -166,7 +167,7 @@ def enemies_methods():
   if request.method == "GET":
     collection = get_collection('enemies')
     enemies = mongo.find_multiple(collection, {})
-    resp = Response(json.dumps(enemies, indent=2), status=200, mimetype="application/json")
+    resp = Response(bson.dumps(enemies, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
     resp = create_combatant(request, 'enemies')
   else:
