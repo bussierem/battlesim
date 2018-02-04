@@ -42,7 +42,10 @@ class App extends Component {
         const nextFn = i === refreshFns.length-1 ? cb : ()=>fnChain[curSpot+1]();
         fnChain.push(()=>curFn({
           success:(prop)=>{
-            this.setState({[successProps[i]]:prop});
+            console.log("setting state");
+            const newState = {[successProps[curSpot]]:prop};
+            console.log(newState);
+            this.setState(newState);
             nextFn();
           },
           fail:nextFn

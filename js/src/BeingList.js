@@ -92,6 +92,7 @@ class BeingList extends Component{
   
 	render(){
     const beings = this.props.beings.length ? this.props.beings : this.state.beings;
+    console.log(this.props.beings);
 		return <Panel defaultExpanded>
     <Panel.Title toggle>
       <h3> {this.props.type || "No type specified :^ ("} </h3>
