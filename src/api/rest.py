@@ -65,7 +65,7 @@ def update_combatant(request, ctype, guid):
   collection = get_collection(ctype)
   mongo.update_single(collection, guid, updated_combatant.to_json())
   out = { "id": guid }
-  return Response(bson.dumps(out), status=204)
+  return Response(json.dumps(out), status=204)
 
 
 # ------------------ /
