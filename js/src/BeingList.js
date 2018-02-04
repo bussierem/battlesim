@@ -6,7 +6,7 @@ class BeingList extends Component{
 	
 	constructor(props){
 		super(props);
-    this.state = {beings:[]};
+    this.state = {};
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.buildAccordionFromObject = this.buildAccordionFromObject.bind(this);
@@ -19,7 +19,7 @@ class BeingList extends Component{
   
   handleEdit(e,id){
     e.stopPropagation();
-    //this.props.endpoint.put(id,{loading:this.props.loading});
+    this.props.setCombatant(this.props.beings.filter(being=>being._id.$oid===id)[0]);
   }
   
   buildAccordionFromObject(obj,title="No title?",root=false){
