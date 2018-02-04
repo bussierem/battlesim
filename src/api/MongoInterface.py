@@ -80,7 +80,7 @@ def find_multiple(collection, criteria):
 # UPDATE
 def update_single(collection, guid, new_record):
   # Changes the record with the matching guid to the new provided record
-  return collection.replace_one(ObjectId(guid), bson.BSON.encode(new_record))
+  return collection.replace_one(id_eq_criteria(guid), new_record)
 
 # DELETE
 def delete_first(collection, criteria):
