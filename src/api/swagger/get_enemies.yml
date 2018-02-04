@@ -11,7 +11,7 @@ responses:
       properties:
         enemies:
           type: array
-          description: List of Enemy IDs
+          description: List of Enemy id
           items:
             type: string
-            description: Enemy ID
+            description: Enemy id

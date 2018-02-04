@@ -53,7 +53,7 @@ def create_combatant(request, ctype):
   new_combatant = Player(**combatant) if ctype == "players" else Enemy(**combatant)
   collection = get_collection(ctype)
   new_id = mongo.create_single(collection, new_combatant.to_json())
-  out = { "ID": new_id }
+  out = { "id": new_id }
   return Response(json.dumps(out), status=201)
 
 def update_combatant(request, ctype, guid):
@@ -64,7 +64,7 @@ def update_combatant(request, ctype, guid):
   updated_combatant = Player(**combatant) if ctype == "players" else Enemy(**combatant)
   collection = get_collection(ctype)
   cid = mongo.update_single(collection, guid, update_combatant.to_json())
-  out = { "ID": cid }
+  out = { "id": cid }
   return Response(json.dumps(out), status=204)
 
 

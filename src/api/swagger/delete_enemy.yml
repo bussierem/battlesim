@@ -5,7 +5,7 @@ tags:
 parameters:
   - name: guid
     in: path
-    description: ID of the Enemy to delete
+    description: id of the Enemy to delete
     required: true
     type: string
 responses:
