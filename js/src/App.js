@@ -16,6 +16,7 @@ class App extends Component {
     super(props);
     const allSchemas = SchemaLoader("Player","Enemy");
     this.validateSchema = this.validateSchema.bind(this);
+    this.validateSchemaPlayer = this.validateSchemaPlayer.bind(this);
     this.loading = this.loading.bind(this);
     this.state = {
       players:[],
@@ -42,9 +43,7 @@ class App extends Component {
         const nextFn = i === refreshFns.length-1 ? cb : ()=>fnChain[curSpot+1]();
         fnChain.push(()=>curFn({
           success:(prop)=>{
-            console.log("setting state");
             const newState = {[successProps[curSpot]]:prop};
-            console.log(newState);
             this.setState(newState);
             nextFn();
           },
@@ -59,6 +58,14 @@ class App extends Component {
     else{
       this.setState({loading});
     }
+  }
+  
+  validateSchemaPlayer(fullBody,errors){
+    if(this.state.players.filter(player=>player.name===fullBody.name).length){
+      errors['name'].addError(`${fullBody.name} must be unique`);
+    }
+    this.validateSchema(fullBody,errors);
+    return errors;
   }
   
   validateSchema(fullBody,errors){
@@ -100,7 +107,7 @@ class App extends Component {
       </Panel.Title>
       <Panel.Collapse>
       <Panel.Body>
-        <CreateCombatant schema={this.state.allSchemas["Player"]} validateSchema={this.validateSchema} loading = {this.loading} endpoint={Api.player}/>
+        <CreateCombatant schema={this.state.allSchemas["Player"]} validateSchema={this.validateSchemaPlayer} loading = {this.loading} endpoint={Api.player}/>
         <CreateCombatant schema={this.state.allSchemas["Enemy"]} validateSchema = {this.validateSchema} loading = {this.loading} endpoint = {Api.enemy}/>
       </Panel.Body>
       </Panel.Collapse>

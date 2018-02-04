@@ -10,16 +10,23 @@ const handleResponseWrapper = (fail=e=>console.log(e),success=()=>{},loading=()=
   }
 }
 const handleResponse = (err,response,body,fail,success) => {
-  let jsonBody;
+  const successCodes = [200,201];
+  let jsonBody = body;
   if(err){
     fail(err);
     return;
   }
-  try{
-    jsonBody = JSON.parse(body);
+  if(typeof body ==='string' && body.length){
+    try{
+      jsonBody = JSON.parse(body);
+    }
+    catch(e){
+      fail(`Could not parse response body of ${body} because of ${e}`);
+      return;
+    }
   }
-  catch(e){
-    fail(`Could not parse response body ${e}`);
+  if(response && !successCodes.includes(response.statusCode)){
+    fail(jsonBody);
     return;
   }
   success(jsonBody);
@@ -29,9 +36,9 @@ const get = (route) => (id,{fail,success,loading})=> request.get(buildUrl(route,
 const getAll = (route) => ({fail,success,loading})=> request.get(buildUrl(route),handleResponseWrapper(fail,success,loading));
 const post = (route) => (body,{fail,success,loading})=> {
 	console.log(body);
-	return request.post({url:buildUrl(route),body:JSON.stringify(body)},handleResponseWrapper(fail,success,loading));
+	return request.post({url:buildUrl(route),body:body,json:true},handleResponseWrapper(fail,success,loading));
 };
-const put = (route) =>(id,body,{fail,success,loading}) => request.put({url:buildUrl(route,id),body:JSON.stringify(body)},handleResponseWrapper(fail,success,loading));
+const put = (route) =>(id,body,{fail,success,loading}) => request.put({url:buildUrl(route,id),body:body,json:true},handleResponseWrapper(fail,success,loading));
 const del = (route) => (id,{fail,success,loading})=>request.delete(buildUrl(route,id),handleResponseWrapper(fail,success,loading));
 const httpMethods = {get,getAll,post,put,del};
 
