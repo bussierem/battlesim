@@ -6,49 +6,7 @@ class BeingList extends Component{
 	
 	constructor(props){
 		super(props);
-    this.state = {
-      beings:[
-      {
-         "name":"Joshua Davies",
-         "level":1,
-         "health":10,
-         "init":0,
-         "defense":10,
-         "attacks":[
-            {
-               "atk_type":"5",
-               "hit_bonus":5,
-               "damage":"4d20"
-            }
-         ],
-         "spells":[
-
-         ],
-         "consumables":0,
-         "regenerators":0,
-         "id":3
-      },
-      {
-         "name":"xddddd",
-         "level":4,
-         "health":15,
-         "init":0,
-         "defense":90,
-         "attacks":[
-            {
-               "atk_type":"5",
-               "hit_bonus":30000,
-               "damage":"4d20"
-            }
-         ],
-         "spells":[
-
-         ],
-         "consumables":0,
-         "regenerators":0,
-         "id":5
-      }
-    ]};
+    this.state = {beings:[]};
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.buildAccordionFromObject = this.buildAccordionFromObject.bind(this);
@@ -65,6 +23,9 @@ class BeingList extends Component{
   }
   
   buildAccordionFromObject(obj,title="No title?",root=false){
+    if(title==="_id" && !root){
+      return;
+    }
     if(obj === Object(obj)){
       return <Accordion accordion={false}>
         <AccordionItem>
@@ -73,8 +34,8 @@ class BeingList extends Component{
             { root? 
               <div id='accordionTitle'>
                 <span> {title} </span> 
-                <Button bsStyle="success" className='pull-right' onClick = {e=>this.handleEdit(e,obj.id)}>+</Button>
-                <Button bsStyle="danger" className='pull-right' onClick={e=>this.handleDelete(e,obj.id)}>-</Button>
+                <Button bsStyle="success" className='pull-right' onClick = {e=>this.handleEdit(e,obj._id.$oid)}>+</Button>
+                <Button bsStyle="danger" className='pull-right' onClick={e=>this.handleDelete(e,obj._id.$oid)}>-</Button>
               </div> : <span> {title} </span> 
             }
           </AccordionItemTitle>
@@ -87,12 +48,11 @@ class BeingList extends Component{
         </AccordionItem>
         </Accordion>;
     }
-    return title !== 'id' ? <p>{`${title}:${obj}`}</p> : null;
+    return <p>{`${title}:${obj}`}</p>;
   }
   
 	render(){
-    const beings = this.props.beings.length ? this.props.beings : this.state.beings;
-    console.log(this.props.beings);
+    const beings = this.props.beings;
 		return <Panel defaultExpanded>
     <Panel.Title toggle>
       <h3> {this.props.type || "No type specified :^ ("} </h3>
