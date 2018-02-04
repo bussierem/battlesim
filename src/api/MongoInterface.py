@@ -8,11 +8,7 @@ DB_CONNECT = "mongodb://{}:{}@ds119078.mlab.com:19078/battle-sim"
 
 # UTILITY FUNCTIONS
 def rupff():
-  print("=========================================")
-  print("CURRENT WORKING DIRECTORY: ", os.getcwd())
-  print(os.listdir(os.getcwd()))
-  print("=========================================")
-  with open('../../../data/secrets', 'r') as f:
+  with open('data/secrets', 'r') as f:
     return ["".join(re.findall(r'X\w',x)).replace('X','') for x in f.read().split('=')]
 
 def connect_to_database():
