@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Panel} from 'react-bootstrap';
+import {Panel,Button} from 'react-bootstrap';
 import {Accordion,AccordionItem,AccordionItemTitle,AccordionItemBody} from 'react-accessible-accordion';
 
 class BeingList extends Component{
@@ -25,7 +25,8 @@ class BeingList extends Component{
 
          ],
          "consumables":0,
-         "regenerators":0
+         "regenerators":0,
+         "id":3
       },
       {
          "name":"xddddd",
@@ -44,18 +45,39 @@ class BeingList extends Component{
 
          ],
          "consumables":0,
-         "regenerators":0
+         "regenerators":0,
+         "id":5
       }
     ]};
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
     this.buildAccordionFromObject = this.buildAccordionFromObject.bind(this);
 	}
 	
-  buildAccordionFromObject(obj,title){
+  handleDelete(e,id){
+    e.stopPropagation();
+    this.props.endpoint.del(id,{loading:this.props.loading});
+  }
+  
+  handleEdit(e,id){
+    e.stopPropagation();
+    //this.props.endpoint.put(id,{loading:this.props.loading});
+  }
+  
+  buildAccordionFromObject(obj,title="No title?",root=false){
     if(obj === Object(obj)){
       return <Accordion accordion={false}>
         <AccordionItem>
         {
-          <AccordionItemTitle> <h4> {title || "No title?"} </h4> </AccordionItemTitle>
+          <AccordionItemTitle> 
+            { root? 
+              <div id='accordionTitle'>
+                <span> {title} </span> 
+                <Button bsStyle="success" className='pull-right' onClick = {e=>this.handleEdit(e,obj.id)}>+</Button>
+                <Button bsStyle="danger" className='pull-right' onClick={e=>this.handleDelete(e,obj.id)}>-</Button>
+              </div> : <span> {title} </span> 
+            }
+          </AccordionItemTitle>
         }
         <AccordionItemBody>
         {
@@ -65,17 +87,18 @@ class BeingList extends Component{
         </AccordionItem>
         </Accordion>;
     }
-    return <p>{`${title}:${obj}`}</p>;
+    return title !== 'id' ? <p>{`${title}:${obj}`}</p> : null;
   }
   
 	render(){
+    const beings = this.props.beings.length ? this.props.beings : this.state.beings;
 		return <Panel defaultExpanded>
     <Panel.Title toggle>
       <h3> {this.props.type || "No type specified :^ ("} </h3>
     </Panel.Title>
     <Panel.Collapse>
     <Panel.Body>
-      {this.state.beings.map(being=>this.buildAccordionFromObject(being,being.name))}
+      {beings.map(being=>this.buildAccordionFromObject(being,being.name,true))}
     </Panel.Body>
     </Panel.Collapse>
     </Panel>;

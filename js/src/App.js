@@ -31,6 +31,8 @@ class App extends Component {
   }
   
   loading(loading){
+    
+    //IDK about this, can we use promises somehow uggg
     const refreshAll = (refreshFns,successProps,cb)=>{
       const fnChain = [];
       let i;
@@ -104,10 +106,10 @@ class App extends Component {
       </Row>
 			<Row className='row' id='topRow'>
 				<Col sm = {6} className='col'>
-          <BeingList beings={this.state.players} type="Players"/>     
+          <BeingList beings={this.state.players} loading = {this.loading} endpoint={Api.player} type="Players"/>     
 				</Col>
 				<Col sm = {6} className='col'>
-					<BeingList beings={this.state.enemies} type="Enemies"/>
+					<BeingList beings={this.state.enemies} loading = {this.loading} endpoint={Api.enemy} type="Enemies"/>
 				</Col>
 			</Row>
 			<Row className='row' id='bottomRow'>
