@@ -63,7 +63,7 @@ class App extends Component {
   }
   
   validateSchemaPlayer(fullBody,errors){
-    if(this.state.players.filter(player=>player.name===fullBody.name).length){
+    if(!this.state.player && this.state.players.filter(player=>player.name===fullBody.name).length){
       errors['name'].addError(`${fullBody.name} must be unique`);
     }
     this.validateSchema(fullBody,errors);
