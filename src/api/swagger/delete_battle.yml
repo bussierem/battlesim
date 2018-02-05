@@ -1,0 +1,13 @@
+Delete a Battle by ID
+---
+tags:
+  - Battles
+parameters:
+  - name: guid
+    in: path
+    description: id of the Battle to delete
+    required: true
+    type: string
+responses:
+  200:
+    description: Battle deleted
