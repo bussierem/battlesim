@@ -90,6 +90,8 @@ def spec():
     return jsonify(swagger(app))
 
 @app.route("/battles", endpoint='battles_no_guid', methods=['GET', 'POST'])
+@swag_from("swagger/get_battles.yml", endpoint='battles_no_guid', methods=['GET'])
+@swag_from("swagger/run_battle.yml", endpoint='battles_no_guid', methods=['POST'])
 def battles_methods():
   if request.method == "GET":
     collection = get_collection('overviews')
@@ -113,6 +115,8 @@ def battles_methods():
   return resp
 
 @app.route("/battles/<guid>", endpoint='battles_guid', methods=['GET', 'DELETE'])
+@swag_from("swagger/get_battle.yml", endpoint='battles_guid', methods=['GET'])
+@swag_from("swagger/delete_battle.yml", endpoint='battles_guid', methods=['DELETE'])
 def battle_methods(guid):
   resp = None
   if request.method == "GET":
