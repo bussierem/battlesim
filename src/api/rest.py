@@ -92,7 +92,7 @@ def spec():
 @app.route("/battles", endpoint='battles_no_guid', methods=['GET', 'POST'])
 def battles_methods():
   if request.method == "GET":
-    collection = get_collection('battles')
+    collection = get_collection('overviews')
     battles = mongo.find_multiple(collection, {})
     resp = Response(bson.dumps(battles, indent=2), status=200, mimetype="application/json")
   elif request.method == "POST":
