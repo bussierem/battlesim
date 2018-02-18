@@ -3,30 +3,15 @@ Retrieve list of all Battle Overviews
 tags:
   - Battles
 definitions:
-  Overview:
-    type: object
-    properties:
-      id:
-        type: string
-        description: Id of this battle
-      winners:
-        type: string
-        description: Winner of the battle ("Players" or "Enemies")
-      losers:
-        type: string
-        description: Loser of the battle ("Players" or "Enemies")
-      round_count:
-        type: integer
-        description: Duration of battle in combat rounds
 responses:
   200:
-    description: Battles sent
     schema:
       id: Battles
       type: object
       properties:
-        battles:
+        players:
           type: array
-          description: List of Battle Overviews
+          description: List of Battle ids
           items:
-            $ref: "#/definitions/Overview"
+            type: string
+            description: Battle id
