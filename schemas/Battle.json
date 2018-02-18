@@ -1,0 +1,70 @@
+{
+  "title": "Battle",
+  "type": "object",
+  "properties": {
+    "overview": {
+      "type": "string"
+    },
+    "players": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "enemies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rounds": {
+      "type": "array",
+      "items": {
+        "attacker_before": {
+          "type": "object",
+          "base_class": "Combatant"
+        },
+        "defender_before": {
+          "type": "object",
+          "base_class": "Combatant"
+        },
+        "attack": {
+          "type": "object",
+          "properties": {
+            "is_spell": {
+              "type": "boolean"
+            },
+            "spell_level": {
+              "type": "integer"
+            },
+            "hit_roll": {
+              "type": "integer"
+            },
+            "is_hit": {
+              "type": "boolean"
+            },
+            "is_crit": {
+              "type": "boolean"
+            },
+            "damage_roll": {
+              "type": "integer"
+            },
+            "killed": {
+              "type": "boolean"
+            },
+          }
+        },
+        "attacker_after": {
+          "type": "object",
+          "base_class": "Combatant"
+        },
+        "defender_after": {
+          "type": "object",
+          "base_class": "Combatant"
+        },
+      }
+    },
+    "winner": "string",
+    "loser": "string"
+  }
+}

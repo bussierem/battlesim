@@ -20,14 +20,15 @@ class CombatSystem:
     return self.turn_order[self.current_index][0]
 
   def play_combat_round(self):
+    round_result = []
     for i, cur_combatant in enumerate([x[0] for x in self.turn_order]):
       self.current_index = i
       print("{}'s turn! FIGHT!".format(cur_combatant.name))
-      turn_result = self.battle.combatant_turn(cur_combatant)
+      round_result.append(self.battle.combatant_turn(cur_combatant))
       if self.battle.battle_over():
         print("BATTLE OVER!")
         break
-    return turn_result
+    return round_result
 
   def play_full_combat(self):
     combat_data = {"rounds": [], 'winner': "", 'loser': ""}
