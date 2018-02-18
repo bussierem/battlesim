@@ -2,7 +2,6 @@ from battle.BattleManager import *
 from systems.Utilities import *
 import api.MongoInterface as mongo
 import bson.json_util as bson
-from api.rest import get_collection
 from objects.Player import *
 from objects.Enemy import *
 
@@ -10,6 +9,15 @@ import random
 import json
 import sys, os
 import uuid
+
+def get_collection(dtype):
+  db = mongo.connect_to_database()
+  return {
+    'players': db.Players,
+    'enemies': db.Enemies,
+    'battles': db.Battles,
+    'overviews': db.Overviews
+  }.get(dtype)
 
 class CombatSystem:
   def __init__(self, players, enemies):
