@@ -105,11 +105,9 @@ def battles_methods():
       resp = Response(json.dumps(error, indent=2), status=400)
     else:
       system = CombatSystem(teams['players'], teams['enemies'])
-      overview = system.play_full_combat()
-      collection = get_collection('overviews')
-      ovid = mongo.create_single(collection, overview)
-      overview = mongo.find_single(collection, mongo.id_eq_criteria(ovid))
-      resp = Response(bson.dumps(overview, indent=2), status=200, mimetype="application/json")
+      battle_id = system.play_full_combat()
+      data = { "id": battle_id }
+      resp = Response(bson.dumps(data, indent=2), status=200, mimetype="application/json")
   else:
     error = { "error": "UNSUPPORTED METHOD /battles [{}]".format(request.method) }
     resp = Response(json.dumps(error, indent=2), status=400)

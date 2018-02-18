@@ -2,109 +2,6 @@ Run a battle with a list of Players and Enemies
 ---
 tags:
   - Battles
-definitions:
-  Player_Attack:
-    type: object
-    properties:
-      atk_type:
-        type: string
-        description: Melee or Ranged
-      hit_bonus:
-        type: integer
-        description: Bonus to attack roll (can be negative)
-      damage:
-        type: string
-        description: Damage roll (XdY+B) or range (<min>-<max>)
-  Combatant:
-    type: object
-    properties:
-      name:
-        type: string
-        description: Player's name
-      health:
-        type: integer
-        description: Player's Health total
-      init:
-        type: integer
-        description: Player's initiative bonus
-      defense:
-        type: integer
-        description: Player's Defense total
-      attacks:
-        type: array
-        description: A list of Player attacks (not spells)
-        items:
-          $ref: "#/definitions/Player_Attack"
-  Attack:
-    type: object
-    properties:
-      is_spell:
-        type: boolean
-        description: Whether the attack was a Magic Spell or not
-      spell_level:
-        type: integer
-        description: The level of the Spell
-        default: 0
-      hit_roll:
-        type: integer
-        description: The total roll (with bonuses) of the attack
-      is_hit:
-        type: boolean
-        description: Whether the attack hit or not
-      is_crit:
-        type: boolean
-        description: Whether the attack was a critical hit or not
-      damage_roll:
-        type: integer
-        description: The total damage (with bonuses) of the attack
-      killed:
-        type: boolean
-        description: Whether the attack killed the defender or not
-  Round:
-    type: object
-    properties:
-      attacker_before:
-        type: object
-        $ref: "#/definitions/Combatant"
-      defender_before:
-        type: object
-        $ref: "#/definitions/Combatant"
-      attack:
-        type: object
-        $ref: "#/definitions/Attack"
-      attacker_after:
-        type: object
-        $ref: "#/definitions/Combatant"
-      defender_after:
-        type: object
-        $ref: "#/definitions/Combatant"
-  Battle:
-    type: object
-    properties:
-      overview:
-        type: string
-        description: Id of the Battle Overview
-      players:
-        type: array
-        description: List of Ids of the Players in the battle
-        items:
-          type: string
-      enemies:
-        type: array
-        description: List of Ids of the Enemies in the battle
-        items:
-          type: string
-      rounds:
-        type: array
-        description: List of all rounds in the combat
-        items:
-          $ref: "#/definitions/Round"
-      winner:
-        type: string
-        description: Winner of the combat - "Players" or "Enemies"
-      loser:
-        type: string
-        description: Loser of the combat - "Players" or "Enemies"
 parameters:
   - name: body
     in: body
@@ -125,6 +22,10 @@ parameters:
             type: string
 responses:
   200:
-    description: The total data for the battle
+    description: Battle Run
     schema:
-      $ref: "#/definitions/Battle"
+      type: object
+      properties:
+        id:
+          type: string
+          descriptions: The id of the battle just run

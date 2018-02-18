@@ -1,5 +1,9 @@
 from battle.BattleManager import *
 from systems.Utilities import *
+import api.MongoInterface as mongo
+from api.rest import get_collection
+from objects.Player import *
+from objects.Enemy import *
 
 import random
 import json
@@ -8,9 +12,16 @@ import uuid
 
 class CombatSystem:
   def __init__(self, players, enemies):
-    self.battle = BattleManager(players, enemies)
+    self.players = [Player(**self.get_combatant('players', p)) for p in players]
+    self.enemies = [Enemy(**self.get_combatant('enemies', e)) for e in enemies]
+    self.battle = BattleManager(self.players, self.enemies)
     self.turn_order = []
     self.current_index = 0
+    self.battle_coll = get_collection('battles')
+
+  def get_combatant(self, dtype, guid):
+    collection = get_collection(dtype)
+    return mongo.find_single(collection, mongo.id_eq_criteria(guid))
 
   def roll_initiative(self):
     self.turn_order = [[c, c.roll_init()['total']] for c in self.battle.combatants]
@@ -31,7 +42,14 @@ class CombatSystem:
     return round_result
 
   def play_full_combat(self):
-    combat_data = {"rounds": [], 'winner': "", 'loser': ""}
+    combat_data = {
+      "players": [p.to_json() for p in self.battle.players],
+      "enemies": [e.to_json() for e in self.battle.enemies],
+      "rounds": [],
+      "winner": "",
+      "loser": ""
+    }
+    self.roll_initiative()
     while not self.battle.battle_over():
       combat_data['rounds'].append(self.play_combat_round())
     if self.battle.enemies == []:
@@ -46,22 +64,9 @@ class CombatSystem:
   # ------ UTILITY FUNCTIONS -------- /
   # --------------------------------- /
 
-  def record_battle(self, battle):
-    # record separate battle, assign ID
-    guid = str(uuid.uuid4())
-    combat_data['id'] = guid
-    write_data_to_json(combat_data, "../data/battles/{}.json".format(guid))
-    # build an overview and add it to list
-    combat_overview = {
-      'id': guid,
-      'winner': combat_data['winner'],
-      'loser': combat_data['loser'],
-      'round_duration': len(combat_data['rounds'])
-    }
-    battle_data = read_json_file('../data/battles.json')
-    battle_data['battles'].append(combat_overview)
-    write_data_to_json(battle_data, '../data/battles.json')
-    return combat_overview
+  def record_battle(self, combat_data):
+    # record separate battle
+    return mongo.create_single(self.battle_coll, combat_data)
 
 
   def print_initiative(self):
