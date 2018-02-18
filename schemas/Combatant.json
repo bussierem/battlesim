@@ -21,13 +21,6 @@
         "type": "Attack"
       },
       "default": []
-    },
-    "spells": {
-      "type": "array",
-      "items": {
-        "type": "Magic"
-      },
-      "default": []
     }
   }
 }
