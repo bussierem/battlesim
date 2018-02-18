@@ -1,7 +1,6 @@
 from battle.BattleManager import *
 from systems.Utilities import *
 import api.MongoInterface as mongo
-import bson.json_util as bson
 from api.rest import get_collection
 from objects.Player import *
 from objects.Enemy import *

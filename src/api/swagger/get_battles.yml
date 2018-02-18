@@ -2,7 +2,6 @@ Retrieve list of all Battle Overviews
 ---
 tags:
   - Battles
-definitions:
 responses:
   200:
     schema:
