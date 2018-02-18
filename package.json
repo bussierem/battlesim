@@ -1,7 +1,10 @@
 {
-  "name":"battlesim",
+  "name": "battlesim",
   "version": "0.1.0",
-  "scripts":{
+  "scripts": {
     "postinstall": "npm install --prefix js  && npm run build --prefix js"
+  },
+  "dependencies": {
+    "react-select": "^1.2.1"
   }
 }

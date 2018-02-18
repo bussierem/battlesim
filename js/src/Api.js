@@ -48,6 +48,9 @@ const endpoints = {
   },
   enemy:{
     route:"enemies"
+  },
+  battle:{
+    route:"battles"
   }
 };
 

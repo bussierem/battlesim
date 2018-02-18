@@ -8,6 +8,7 @@ import './App.css';
 
 import BeingList from './BeingList'
 import CreateCombatant from './CreateCombatant';
+import CreateBattle from './CreateBattle';
 const Api = require('./Api');
 const SchemaLoader = require('./SchemaLoader');
 
@@ -113,6 +114,7 @@ class App extends Component {
                          loading = {this.loading} endpoint={Api.player} clearCombatant = {()=>this.setState({player:null})}/>
         <CreateCombatant schema={this.state.allSchemas["Enemy"]}  combatant={this.state.enemy} validateSchema = {this.validateSchema} 
                          loading = {this.loading} endpoint = {Api.enemy} clearCombatant = {()=>this.setState({enemy:null})}/>
+		<CreateBattle players = {this.state.players} enemies = {this.state.enemies} endpoint={Api.battle}/>
       </Panel.Body>
       </Panel.Collapse>
       </Panel>
