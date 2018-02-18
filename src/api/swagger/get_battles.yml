@@ -3,8 +3,7 @@ Retrieve list of all Battle Overviews
 tags:
   - Battles
 definitions:
-  schema:
-    id: Overview
+  Overview:
     type: object
     properties:
       id:
@@ -28,6 +27,6 @@ responses:
       properties:
         battles:
           type: array
-          description: List of Player ids
+          description: List of Battle Overviews
           items:
             $ref: "#/definitions/Overview"
