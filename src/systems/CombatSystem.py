@@ -1,6 +1,7 @@
 from battle.BattleManager import *
 from systems.Utilities import *
 import api.MongoInterface as mongo
+import bson.json_util as bson
 from api.rest import get_collection
 from objects.Player import *
 from objects.Enemy import *
@@ -65,8 +66,11 @@ class CombatSystem:
   # --------------------------------- /
 
   def record_battle(self, combat_data):
+    with open("test.json", "w") as wf:
+      json.dump(combat_data, wf, indent=2)
     # record separate battle
-    return mongo.create_single(self.battle_coll, combat_data)
+    ovid = mongo.create_single(self.battle_coll, combat_data)
+    return ovid
 
 
   def print_initiative(self):

@@ -61,6 +61,11 @@ definitions:
         type: boolean
         description: Whether the attack killed the defender or not
   Round:
+    type: array
+    description: List of turns in the round
+    items:
+      type: "#/definitions/Turn"
+  Turn:
     type: object
     properties:
       attacker_before:
@@ -81,9 +86,6 @@ definitions:
   Battle:
     type: object
     properties:
-      overview:
-        type: string
-        description: Id of the Battle Overview
       players:
         type: array
         description: List of Ids of the Players in the battle
