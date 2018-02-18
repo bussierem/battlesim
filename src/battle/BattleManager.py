@@ -31,14 +31,16 @@ class BattleManager:
       target = rand_from_list(self.enemies)
     print("Target:  {} ({} HP, {} DEF)".format(target.name, target.hp, target.defense))
     # Get attack results
+    result['attacker_before'] = combatant.to_json()
+    result['defender_before'] = target.to_json()
     atk_result = combatant.attack(target)
-    result['attacker'] = combatant.to_json()
-    result['defender'] = target.to_json()
+    result['attacker_after'] = combatant.to_json()
+    result['defender_after'] = target.to_json()
     print("-------------")
     killed = False
     if target.hp <= 0:
       print("Target Died!")
       self.kill_combatant(target)
       killed = True
-    result['killed_target'] = killed
-    return {**result, **atk_result}
+    atk_result['killed'] = killed
+    return {**result, "attack": atk_result}
