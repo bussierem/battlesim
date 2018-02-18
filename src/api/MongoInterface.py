@@ -3,7 +3,6 @@ from bson.objectid import ObjectId
 import bson
 import datetime
 import re
-import os
 
 DB_NAME = 'battle-sim'
 DB_CONNECT = "mongodb://{}:{}@ds119078.mlab.com:19078/battle-sim"
